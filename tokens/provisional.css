@@ -1,0 +1,79 @@
+/* 잠정 토큰 — 상태: 실험. 승인된 값이 아니다.
+   문서 사이트가 이 파일을 직접 읽는다. 값을 바꾸면 사이트 전체가 함께 바뀐다.
+   역할 이름은 유지하고 값만 시험한다. 강조색·모서리 형태·서체는 아직 결정하지 않았다. */
+:root {
+  color-scheme: light dark;
+
+  /* 색 역할 (밝은 화면) — 무채색만. 강조색 역할은 비워 둔다. */
+  --c-bg: #f3f3f0;
+  --c-surface: #ffffff;
+  --c-text: #141414;
+  --c-text-2: #55554f;
+  --c-line: #cdcdc6;
+  --c-line-strong: #141414;
+  --c-hover: #e8e8e3;
+  --c-focus: #141414;
+
+  /* 글자 — 시스템 서체. 후보 서체(넓은 라틴 제목체·Montserrat)는 적용하지 않았다. */
+  --font-sans: system-ui, -apple-system, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Noto Sans CJK KR", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --t-display: clamp(1.75rem, 1.1rem + 3.2vw, 2.75rem);
+  --t-title: 1.5rem;
+  --t-sub: 1.125rem;
+  --t-body: 1rem;
+  --t-label: 0.8125rem;
+  --lh-tight: 1.25;
+  --lh-body: 1.75;
+  --w-regular: 400;
+  --w-strong: 700;
+  --measure: 38em;
+
+  /* 간격 — 4px 기준 단계 */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 72px;
+
+  /* 선·형태 — 반경 0은 CSS 기본값이며 '직각으로 결정'했다는 뜻이 아니다. */
+  --line: 1px;
+  --line-strong: 2px;
+  --radius: 0;
+  --target: 44px;
+
+  /* 움직임 — 상태 연결용 한 단계. reduced-motion에서는 0. */
+  --dur: 120ms;
+  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-bg: #151515;
+    --c-surface: #1d1d1c;
+    --c-text: #ecece8;
+    --c-text-2: #a6a69f;
+    --c-line: #3b3b37;
+    --c-line-strong: #ecece8;
+    --c-hover: #272725;
+    --c-focus: #ecece8;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --c-bg: #151515;
+  --c-surface: #1d1d1c;
+  --c-text: #ecece8;
+  --c-text-2: #a6a69f;
+  --c-line: #3b3b37;
+  --c-line-strong: #ecece8;
+  --c-hover: #272725;
+  --c-focus: #ecece8;
+}
+:root[data-theme="light"] { color-scheme: light; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: 0ms; }
+}

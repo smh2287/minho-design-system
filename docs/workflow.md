@@ -2,9 +2,9 @@
 
 ## 역할
 
-- GitHub private `smh2287/minho-design-system`: 코드·문서·토큰의 버전 기준.
-- 작업 PC `E:\Design\MinhoDesignSystem\minho-design-system`: 로컬 Git 작업 사본.
-- Linux `projects/minho-design-system`: 에이전트 개발 사본. 작업 PC와 동일 원격 사용.
+- GitHub 공개 저장소 `smh2287/minho-design-system`: 코드·문서·토큰의 버전 기준. 2026-11-16부터 공개이며 GitHub Pages로 사이트를 게시한다.
+- 작업 PC: 로컬 Git 작업 사본. (기기 내 절대 경로는 공개 저장소에 적지 않는다.)
+- Linux 서버: 에이전트 개발 사본. 작업 PC와 동일 원격 사용.
 - 기존 `seed-20261115-2044`: 이전 전달본 보존. 앞으로의 개발 원본으로 사용하지 않음.
 - NAS: 대형 원본과 복원 가능한 별도 백업 역할. 아직 백업 자동화·복원 시험을 구성하지 않았다.
 - Drive: 필요할 때 공유용 PDF·이미지. 별도 규칙 원본으로 쓰지 않음.
@@ -22,13 +22,13 @@ PC origin은 SSH URL이고 repo-local core.sshCommand로 이 키만 선택한다
 
 민호가 `_Personal Projects` 아래 폴더 생성을 승인했다.
 
-- NAS 홈: `/volume1/02.S_Minho/01_Projects/_Personal Projects/MinhoDesignSystem`
+- NAS 홈: 개인 프로젝트 폴더 아래 `MinhoDesignSystem`. (정확한 경로는 비공개 프로젝트 기록에 둔다.)
 - `code/`: 현재 코드·문서의 열람용 스냅샷. `.git`·자격 증명은 복사하지 않는다.
 - `backups/`: 복원용 Git bundle과 파일 SHA256 목록. 자동 백업이 아닌 수동 검증 시점의 백업이다.
 - 루트 `README.md`: 위치·역할·연결 안내.
-- Obsidian: `01_Projects/_Personal Projects/MinhoDesignSystem/ProjectDash_MinhoDesignSystem.md`에서 상태·다음 행동 추적.
+- Obsidian: 프로젝트 대시보드 노트에서 상태·다음 행동 추적.
 
-일반 NAS 파일 접근은 `ssh nas`를 사용한다. Drive API 로그인 만료는 SSH 접근과 무관하며 재로그인이 필요하지 않다.
+일반 NAS 파일 접근은 SSH를 사용한다. Drive API 로그인 만료는 SSH 접근과 무관하며 재로그인이 필요하지 않다.
 활성 Git 작업은 PC/Linux 로컬 사본에서 한다. NAS와 `.git` 양방향 동기화를 구성하지 않는다.
 기존 PC 경로는 보존하며 NAS 홈과 구별한다. NAS 코드 사본은 수정 전 Git 개발 사본으로 가져와 변경 이력을 남긴다.
 
@@ -40,8 +40,17 @@ PC origin은 SSH URL이고 repo-local core.sshCommand로 이 키만 선택한다
 4. 한 작업 사본에서 만든 커밋을 다른 사본은 pull로 받는다. 활성 `.git` 폴더를 Drive/NAS 양방향 동기화로 공유하지 않는다.
 5. 승인된 방향만 공통 토큰·부품으로 승격. Fable 보존본을 바꿀 때는 새 실험 디렉터리로 복사한다.
 
-## 미리보기
+## 게시 — 2026-11-16
 
-현재는 파일 직접 열기 또는 README의 로컬 서버. GitHub 저장소는 렌더링된 사이트가 아니다.
-GitHub 연동 미리보기는 접근 제어·호스팅 환경을 정해 별도 연결한다. 비공개 저장소가 사이트 비공개까지 보장하지 않는다.
-NAS 수동 스냅샷·bundle과 외부 웹 배포·자동 동기화는 별개다. 외부 웹 배포와 자동 주기 동기화는 아직 미구성이다.
+- 주소: <https://smh2287.github.io/minho-design-system/>
+- 방식: GitHub Pages 브랜치 배포. `main` 브랜치의 루트를 그대로 게시한다. 빌드 단계·워크플로 파일·자체 서버가 없다.
+- `.nojekyll`을 두어 파일을 가공 없이 내보낸다. 저장소의 모든 파일(문서 `.md` 포함)이 주소로 접근 가능하다는 뜻이므로, 올리는 것은 전부 공개된다고 본다.
+- `main`에 푸시하면 자동으로 다시 게시된다. 게시 상태는 저장소의 Pages 설정 또는 `gh api repos/smh2287/minho-design-system/pages/builds/latest`로 확인한다.
+- 기존 포트폴리오 저장소 `smh2287/smh2287.github.io`와는 독립이다. 이 프로젝트 작업에서 그 저장소를 수정하지 않는다.
+- 사이트의 메모 기능은 방문자의 브라우저에만 저장한다. 저장소와 동기화되지 않는다.
+- NAS 수동 스냅샷·bundle은 게시와 별개이며 자동 주기 동기화는 구성하지 않았다. 공개 전환 이후의 NAS 스냅샷 갱신은 아직 하지 않았다.
+
+## 공개 전 점검 — 2026-11-16
+
+공개 전환 전에 추적 파일 전체와 커밋 이력 4건을 검색했다. 자격 증명·키·토큰·이메일·IP·개인 Figma·폰트·외부 이미지가 없음을 확인했다.
+이전 커밋 이력에는 NAS 폴더 경로와 작업 PC의 폴더 경로가 문서 문장으로 남아 있다. 접근 수단이 아닌 위치 표기이며, 이력 재작성(강제 푸시)은 승인 범위 밖이라 하지 않았다. 현재 파일에서는 일반 표현으로 바꾸었다.

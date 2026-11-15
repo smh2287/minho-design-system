@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>패턴 · Minho Design System</title>
+  <meta name="description" content="민호의 개인 디자인 시스템 작업장. 웹페이지 설계 논리를 잠정 토큰으로 직접 시험한다. 승인된 기본 양식 없음.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="../tokens/provisional.css">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script>try{var t=localStorage.getItem('mds.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="../">Minho Design System</a>
+      <span class="brand-note">잠정 작업 문서 · 승인된 기본 없음</span>
+      <button type="button" class="theme-btn" data-theme-btn hidden>화면: 기기 설정</button>
+      <nav class="site-nav" aria-label="주요 탐색">
+        <ul>
+          <li><a href="../">시작</a></li>
+          <li><a href="../foundations/">기초</a></li>
+          <li><a href="../components/">부품</a></li>
+          <li><a href="../patterns/" aria-current="page">패턴</a></li>
+          <li><a href="../lab/">실험</a></li>
+          <li><a href="../decisions/">결정</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <p class="eyebrow">패턴 · <span class="status" data-s="lab">실험</span></p>
+        <h1>부품이 아니라 흐름을 설계한다</h1>
+        <p class="lead">패턴은 부품 여러 개가 순서를 이루는 방식이다. 지금 이 사이트에서 실제로 돌아가는 것은 둘뿐이고, 나머지는 필요한 화면이 생길 때 만든다.</p>
+      </div>
+
+      <section aria-labelledby="h-flow">
+        <h2 id="h-flow">목록 → 상세 → 닫기 → 원래 자리 <span class="status" data-s="lab">실험</span></h2>
+        <div class="prose"><p>열고 닫는 일을 한 흐름으로 본다. 닫은 뒤 어디로 돌아가는지가 정해지지 않으면 키보드 사용자는 길을 잃는다. <a href="../components/#h-demo">부품 페이지의 목록</a>에서 직접 확인할 수 있다.</p></div>
+        <ol class="rows" style="margin-top:var(--s-5)">
+          <li><span class="k">1 고른다</span><span class="d">줄을 누르거나 Enter. 줄에 선택 표시가 생기고 상세가 열린다.</span><span class="v">선택 ≠ hover</span></li>
+          <li><span class="k">2 읽는다</span><span class="d">넓은 화면에서는 초점이 줄에 남아 다음 줄로 바로 옮길 수 있다. 좁은 화면에서는 초점이 상세의 제목으로 간다.</span><span class="v">화면 폭에 따라</span></li>
+          <li><span class="k">3 닫는다</span><span class="d">닫기 단추, Esc, 좁은 화면에서는 어두운 바깥 영역.</span><span class="v">세 가지 길</span></li>
+          <li><span class="k">4 돌아온다</span><span class="d">초점이 눌렀던 바로 그 줄로 돌아오고 선택 표시는 풀린다.</span><span class="v">복귀</span></li>
+        </ol>
+        <p class="note">상세를 좁은 화면에서 아래 대화상자로, 넓은 화면에서 옆자리로 나누는 생각은 Geist의 Drawer 문서(작은 화면은 아래 시트, 큰 화면은 모달 또는 측면 시트)에서 배운 구분이다. 그 문서의 모양을 가져온 것은 아니다.</p>
+      </section>
+
+      <section aria-labelledby="h-read">
+        <h2 id="h-read">읽기 페이지의 골격 <span class="status" data-s="lab">실험</span></h2>
+        <ul class="rows">
+          <li><span class="k">정렬축 하나</span><span class="d">사이트 이름, 탐색, 제목, 본문, 표가 모두 같은 왼쪽 선에서 시작한다. 가운데 정렬은 쓰지 않았다.</span><span class="v">전 페이지</span></li>
+          <li><span class="k">글줄 길이</span><span class="d">본문은 한글 약 서른여덟 자에서 끊는다. 표와 견본은 더 넓게 써도 된다.</span><span class="v mono">--measure</span></li>
+          <li><span class="k">구역의 시작</span><span class="d">얇은 선 + 넓은 간격 + 제목. 카드로 감싸지 않는다.</span><span class="v">선과 간격</span></li>
+          <li><span class="k">대표 행동</span><span class="d">한 페이지에 채운 단추는 많아야 하나.</span><span class="v">시작 페이지</span></li>
+          <li><span class="k">좁은 화면</span><span class="d">세 칸 줄은 설명이 아래로 내려간다. 내용을 지워서 맞추지 않는다.</span><span class="v">640px 이하</span></li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="h-nav">
+        <h2 id="h-nav">탐색: 두 방식의 비교 조건</h2>
+        <div class="prose">
+          <p>이 사이트는 위쪽에 여섯 항목을 늘어놓은 평범한 탐색을 쓴다. 보존된 <a href="../lab/fable-v3/">초안 v3</a>는 화면 모서리에 탐색을 고정하는 방식을 실험했다. 어느 쪽이 낫다고 정하지 않았다. 비교하려면 같은 내용으로 아래를 봐야 한다.</p>
+          <ul>
+            <li>현재 위치를 한눈에 아는가, 탐색이 내용을 가리는가.</li>
+            <li>360px 폭에서 항목이 다 보이는가, 엄지로 닿는가.</li>
+            <li>Tab 순서가 읽는 순서와 같은가.</li>
+            <li>항목이 여섯에서 열둘로 늘어도 버티는가.</li>
+          </ul>
+        </div>
+        <p class="note">이 비교는 아직 하지 않았다. 문서 사이트라는 한 가지 조건에서 위쪽 탐색이 동작한다는 것만 확인했다.</p>
+      </section>
+
+      <section aria-labelledby="h-todo">
+        <h2 id="h-todo">아직 없는 패턴</h2>
+        <div class="prose"><p>양식과 오류 안내, 이미지·영상 보기, 가장자리 패널, 검색과 거르기. 포트폴리오처럼 이미지가 주인공인 전시 페이지와 도구처럼 촘촘한 작업 페이지에서 같은 규칙이 통하는지는 그 페이지를 실제로 만들 때 검증한다.</p></div>
+      </section>
+    </div>
+  </main>
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>이 사이트의 모든 양식은 잠정이며 권위 있는 규격이 아니다. 원본: <a href="https://github.com/smh2287/minho-design-system">저장소</a> · 토큰: <a href="../tokens/provisional.css">tokens/provisional.css</a> · 외부 글꼴·추적·외부 요청 없음.</p>
+    </div>
+  </footer>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

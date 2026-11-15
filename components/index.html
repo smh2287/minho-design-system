@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>부품 · Minho Design System</title>
+  <meta name="description" content="민호의 개인 디자인 시스템 작업장. 웹페이지 설계 논리를 잠정 토큰으로 직접 시험한다. 승인된 기본 양식 없음.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="../tokens/provisional.css">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script>try{var t=localStorage.getItem('mds.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="../">Minho Design System</a>
+      <span class="brand-note">잠정 작업 문서 · 승인된 기본 없음</span>
+      <button type="button" class="theme-btn" data-theme-btn hidden>화면: 기기 설정</button>
+      <nav class="site-nav" aria-label="주요 탐색">
+        <ul>
+          <li><a href="../">시작</a></li>
+          <li><a href="../foundations/">기초</a></li>
+          <li><a href="../components/" aria-current="page">부품</a></li>
+          <li><a href="../patterns/">패턴</a></li>
+          <li><a href="../lab/">실험</a></li>
+          <li><a href="../decisions/">결정</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <p class="eyebrow">부품 · <span class="status" data-s="lab">실험</span></p>
+        <h1>상태가 있는 한 줄에서 시작한다</h1>
+        <p class="lead">단추 하나를 따로 꾸미는 대신, 이름·설명·값·선택 표시가 함께 있는 한 줄을 첫 부품으로 삼았다. 글자 위계, 간격, 선, 상태 구별이 한 번에 드러나기 때문이다. 아래 목록은 이 사이트의 부품 목록 그 자체다. 눌러서 상세를 열고, 닫으면 원래 줄로 돌아오는지 확인해 보자.</p>
+      </div>
+
+      <section aria-labelledby="h-demo">
+        <h2 id="h-demo">선택 행 + 상세 패널 <span class="status" data-s="lab">실험</span></h2>
+        <div class="md" data-md>
+          <div>
+            <ul class="sel-list" aria-label="부품 목록">
+              <li><button type="button" class="sel-row" data-detail="d-row"><span class="mark" aria-hidden="true">▸</span><span class="name">선택 행</span><span class="sub">이름·설명·값·선택 표시가 있는 한 줄</span><span class="val"><span class="status" data-s="lab">실험</span></span></button></li>
+              <li><button type="button" class="sel-row" data-detail="d-panel"><span class="mark" aria-hidden="true">▸</span><span class="name">상세 패널</span><span class="sub">넓은 화면은 옆, 좁은 화면은 아래에서</span><span class="val"><span class="status" data-s="lab">실험</span></span></button></li>
+              <li><button type="button" class="sel-row" data-detail="d-status"><span class="mark" aria-hidden="true">▸</span><span class="name">상태 표지</span><span class="sub">실험 · 검토 · 기본</span><span class="val"><span class="status" data-s="lab">실험</span></span></button></li>
+              <li><button type="button" class="sel-row" data-detail="d-btn"><span class="mark" aria-hidden="true">▸</span><span class="name">단추</span><span class="sub">대표 행동 하나와 보조 행동</span><span class="val"><span class="status" data-s="lab">실험</span></span></button></li>
+              <li><button type="button" class="sel-row" data-detail="d-rows"><span class="mark" aria-hidden="true">▸</span><span class="name">정의 행</span><span class="sub">이름 | 설명 | 값. 표 대신 쓰는 읽기용 줄</span><span class="val"><span class="status" data-s="lab">실험</span></span></button></li>
+              <li><button type="button" class="sel-row" disabled><span class="mark" aria-hidden="true">▸</span><span class="name">입력란</span><span class="sub">아직 없음. 오류·도움말이 필요한 화면이 생기면</span><span class="val"><span class="cap">없음</span></span></button></li>
+            </ul>
+            <p class="live" data-live role="status" aria-live="polite"></p>
+            <p class="note">키보드: <kbd>Tab</kbd>으로 목록에 들어와 <kbd>↑</kbd><kbd>↓</kbd>로 이동, <kbd>Enter</kbd>로 열기, <kbd>→</kbd>로 열린 상세에 들어가기, <kbd>Esc</kbd>로 닫고 원래 줄로 복귀.</p>
+          </div>
+          <div class="detail" role="region" aria-label="선택한 부품의 상세">
+            <p class="empty">줄을 하나 고르면 여기에 사용 조건과 아직 확인하지 못한 점이 나온다. 선택하지 않은 상태도 하나의 상태이므로 빈 자리를 숨기지 않았다.</p>
+          </div>
+          <dialog class="sheet" aria-label="선택한 부품의 상세"><div class="detail"></div></dialog>
+        </div>
+
+        <template id="d-row">
+          <h3>선택 행 <span class="status" data-s="lab">실험</span></h3>
+          <dl>
+            <dt>쓰는 때</dt><dd>여러 항목 중 하나를 골라 자세히 볼 때. 줄마다 값이나 상태를 함께 훑어야 할 때.</dd>
+            <dt>쓰지 않는 때</dt><dd>누르면 다른 페이지로 가는 경우(그건 링크다). 여러 개를 동시에 고르는 경우(체크 방식이 따로 필요하다).</dd>
+            <dt>선택의 표시</dt><dd>왼쪽 굵은 선 + 이름 굵게 + ▸ 표식 + 표면색. 색 하나에 기대지 않는다.</dd>
+            <dt>미확인</dt><dd>실제 화면 읽기 프로그램에서의 낭독, 긴 이름이 두 줄이 될 때의 정렬, 밀집 밀도.</dd>
+          </dl>
+        </template>
+        <template id="d-panel">
+          <h3>상세 패널 <span class="status" data-s="lab">실험</span></h3>
+          <dl>
+            <dt>쓰는 때</dt><dd>목록의 맥락을 잃지 않고 한 항목을 자세히 볼 때.</dd>
+            <dt>넓은 화면</dt><dd>목록 옆에 고정된 자리. 초점은 줄에 남고, 원할 때만 패널로 들어간다.</dd>
+            <dt>좁은 화면</dt><dd>아래에서 올라오는 대화상자. 뒤는 어둡게 가리고, 닫으면 눌렀던 줄로 초점이 돌아간다.</dd>
+            <dt>미확인</dt><dd>실제 휴대폰에서의 뒤로 가기·쓸어내리기, iOS의 스크롤 잠금.</dd>
+          </dl>
+        </template>
+        <template id="d-status">
+          <h3>상태 표지 <span class="status" data-s="lab">실험</span></h3>
+          <dl>
+            <dt>세 단계</dt><dd><span class="status" data-s="lab">실험</span> 점선 · <span class="status" data-s="review">검토</span> 실선 · <span class="status" data-s="base">기본</span> 채움</dd>
+            <dt>쓰는 때</dt><dd>제안과 승인된 규칙이 한 화면에 섞여 있을 때 항상.</dd>
+            <dt>쓰지 않는 때</dt><dd>진행률·오류 같은 다른 뜻의 상태. 그것은 별도 역할이 필요하다.</dd>
+            <dt>미확인</dt><dd>작은 크기에서 점선과 실선이 충분히 구별되는지.</dd>
+          </dl>
+        </template>
+        <template id="d-btn">
+          <h3>단추 <span class="status" data-s="lab">실험</span></h3>
+          <dl>
+            <dt>대표 행동</dt><dd>한 구역에 하나. 채운 형태.</dd>
+            <dt>보조 행동</dt><dd>얇은 테두리. 대표 행동과 나란히 있어도 순위가 보인다.</dd>
+            <dt>비활성</dt><dd>흐리게만 하지 않고 점선 테두리로 바꾼다. 왜 못 누르는지는 곁에 글로 적는다.</dd>
+            <dt>미확인</dt><dd>로딩 중 상태, 아이콘과 함께 쓸 때의 간격.</dd>
+          </dl>
+        </template>
+        <template id="d-rows">
+          <h3>정의 행 <span class="status" data-s="lab">실험</span></h3>
+          <dl>
+            <dt>쓰는 때</dt><dd>이름·설명·값 세 가지를 훑어 읽게 할 때. 이 사이트의 지도와 토큰 표가 이것이다.</dd>
+            <dt>좁은 화면</dt><dd>설명이 아래 줄로 내려가고 이름과 값은 한 줄에 남는다. 가로 스크롤을 만들지 않는다.</dd>
+            <dt>쓰지 않는 때</dt><dd>열이 넷 이상이거나 정렬·비교가 필요한 자료. 그때는 진짜 표가 맞다.</dd>
+          </dl>
+        </template>
+      </section>
+
+      <section aria-labelledby="h-states">
+        <h2 id="h-states">상태를 나란히 놓고 보기</h2>
+        <div class="prose"><p>hover와 선택을 혼동하지 않고, 색 없이도 구별되는지 보려는 정지 견본이다. 조작은 되지 않는다.</p></div>
+        <div class="state-grid">
+          <figure><div class="sel-row" aria-hidden="true"><span class="mark">▸</span><span class="name">기본</span><span class="sub">보조 설명</span></div><figcaption>아래 선 하나로 줄을 나눈다.</figcaption></figure>
+          <figure><div class="sel-row is-hover" aria-hidden="true"><span class="mark">▸</span><span class="name">hover</span><span class="sub">보조 설명</span></div><figcaption>바탕만 한 단계 달라진다. 굵기와 선은 그대로다.</figcaption></figure>
+          <figure><div class="sel-row is-focus" aria-hidden="true"><span class="mark">▸</span><span class="name">키보드 초점</span><span class="sub">보조 설명</span></div><figcaption>2px 테두리. 선택과 겹쳐도 둘 다 보인다.</figcaption></figure>
+          <figure><div class="sel-row is-selected" aria-hidden="true"><span class="mark">▸</span><span class="name">선택</span><span class="sub">보조 설명</span></div><figcaption>왼쪽 굵은 선, 굵은 이름, ▸ 표식, 표면색.</figcaption></figure>
+          <figure><button type="button" class="sel-row" disabled tabindex="-1"><span class="mark" aria-hidden="true">▸</span><span class="name">비활성</span><span class="sub">보조 설명</span></button><figcaption>보조 글자색과 취소선. 가리켜도 반응하지 않는다.</figcaption></figure>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-btn">
+        <h2 id="h-btn">단추와 표지 <span class="status" data-s="lab">실험</span></h2>
+        <div class="btn-row">
+          <button type="button" class="btn">대표 행동</button>
+          <button type="button" class="btn quiet">보조 행동</button>
+          <button type="button" class="btn" disabled>비활성</button>
+          <span class="status" data-s="lab">실험</span><span class="status" data-s="review">검토</span><span class="status" data-s="base">기본</span>
+        </div>
+        <p class="note">이 단추들은 견본이며 아무 일도 하지 않는다. ‘기본’ 표지는 모양을 보여 주려는 것이고, 현재 기본으로 승인된 항목은 없다.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>이 사이트의 모든 양식은 잠정이며 권위 있는 규격이 아니다. 원본: <a href="https://github.com/smh2287/minho-design-system">저장소</a> · 토큰: <a href="../tokens/provisional.css">tokens/provisional.css</a> · 외부 글꼴·추적·외부 요청 없음.</p>
+    </div>
+  </footer>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

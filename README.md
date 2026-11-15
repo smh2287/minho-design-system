@@ -1,37 +1,55 @@
 # Minho Design System
 
-민호의 웹페이지 설계 논리와 재사용 구현을 함께 발전시키는 비공개 작업 저장소.
-현재 **기반 정리 단계**이며, Fable의 ‘모서리’는 승인 전 실험안이다. 정식 시스템 이름은 미정.
+민호의 웹페이지 설계 논리와 재사용 구현을 함께 발전시키는 공개 작업 저장소.
+현재 **기반 단계**이며 승인된 기본 양식은 없다. Fable의 ‘모서리’는 승인 전 실험안이고 정식 시스템 이름은 미정이다.
 
-## 시작
+**사이트: <https://smh2287.github.io/minho-design-system/>**
 
-- [설계 논리](docs/design-logic.md): 정보·배치·글자·상호작용을 결정하는 기준
-- [개발 순서](docs/roadmap.md): 실제 페이지에서 검증하고 규칙으로 추출하기
-- [운영 구조](docs/workflow.md): GitHub / PC / NAS의 역할과 작업 방법
+사이트 자체가 `tokens/provisional.css`의 잠정 토큰으로 만들어져 있다. 사이트의 양식도 실험 상태이며 권위 있는 규격이 아니다.
+
+## 사이트 지도
+
+| 경로 | 내용 | 상태 |
+| --- | --- | --- |
+| `/` | 시작: 상태 읽는 법, 지도, 지금 답할 질문 하나 | 실험 |
+| `/foundations/` | 글자 역할·간격·색 역할·선·움직임 (토큰 값 실시간 표시) | 실험 |
+| `/components/` | 선택 행 + 상세 패널(조작 가능), 상태 견본, 단추·표지 | 실험 |
+| `/patterns/` | 목록→상세→닫기→복귀, 읽기 페이지 골격, 탐색 비교 조건 | 실험 |
+| `/lab/` | 실험 목록. `lab/fable-v3/`는 원본 그대로 보존 | 보존 |
+| `/decisions/` | 다섯 질문과 대안별 결과, 확정·미승인 목록, 근거 자료와 열람 범위 | 질문 5 |
+
+상태는 **실험 → 검토 → 기본** 세 단계다. 현재 검토 0건, 기본 0건.
+
+## 문서
+
+- [설계 논리](docs/design-logic.md): 정보·배치·글자·상호작용을 결정하는 기준 (제안)
 - [결정 기록](docs/decisions.md): 확정과 가설 구분
-- [레퍼런스 구분](references/README.md): 취향 근거와 학습자료를 혼동하지 않기
-- [Fable 원본 실험안](lab/fable-v3/index.html): 작업·전시·견본, 메모리 내 시연
+- [개발 순서](docs/roadmap.md)
+- [운영 구조](docs/workflow.md): 저장소 / 작업 사본 / 배포
+- [레퍼런스 구분](references/README.md): 프로젝트 레퍼런스와 학습자료, 열람 범위
+- [배포·검토 보고 2026-11-16](docs/deploy-report-2026-11-16.md): 확인한 것과 못 한 것
 
-## 실행
+## 실행과 수정
 
-`lab/fable-v3/index.html`을 브라우저로 직접 연다. 설치·빌드 불필요.
-서버가 필요하면 저장소 루트에서 `python -m http.server 4173 --bind 127.0.0.1` 실행 후
-<http://127.0.0.1:4173/lab/fable-v3/>를 연다. 종료는 Ctrl+C.
-이 주소는 실행한 PC 안에서만 동작한다. 외부 미리보기 배포는 아직 연결하지 않았다.
+설치·빌드가 없다. HTML·CSS·JS 파일을 그대로 고치고 `main`에 푸시하면 GitHub Pages(브랜치 배포, 루트)가 게시한다.
+
+로컬에서 볼 때는 저장소 루트에서 `python -m http.server 4173 --bind 127.0.0.1` 실행 후
+<http://127.0.0.1:4173/>을 연다. 종료는 Ctrl+C. 이 주소는 실행한 기기 안에서만 동작한다.
+
+- 머리글·탐색·바닥글은 여섯 HTML 파일에 각각 들어 있다. 탐색을 바꾸면 여섯 곳을 함께 고친다.
+- 모든 내부 링크는 상대 경로다. `/minho-design-system/` 아래에서도, 로컬 루트에서도 동작한다.
+- 외부 글꼴·추적·외부 요청이 없다.
 
 ## 구조
 
-- `docs/`: 원칙·패턴·결정·검증 계획
-- `lab/`: 실험안과 페이지 검증, 확정 컴포넌트와 구분
-- `tokens/`: 승인된 의미 토큰의 향후 원본 위치 (현재 미확정)
-- `references/`: 출처·용도·원본 위치 기록. 외부 자산 자체는 업로드하지 않음
+- `index.html`, `foundations/`, `components/`, `patterns/`, `decisions/`, `lab/index.html`: 문서 사이트
+- `assets/`: 사이트 양식과 동작 (`site.css`, `site.js`)
+- `tokens/provisional.css`: 잠정 토큰 원본. 승인된 값이 아니다
+- `docs/`: 원칙·결정·검증 기록
+- `lab/`: 실험안. 기존 폴더는 덮어쓰지 않고 새 폴더를 만든다
+- `references/`: 출처·용도·열람 범위 기록. 외부 자산 자체는 올리지 않는다
 
-프로젝트별 프레임워크를 아직 고정하지 않는다. 실제 페이지에서 공통 규칙이 검증되면 재사용 부품을 분리한다.
+## 공개 저장소에서 지킬 것
 
-## 프로젝트 홈
-
-NAS: `/volume1/02.S_Minho/01_Projects/_Personal Projects/MinhoDesignSystem`
-
-Obsidian: `01_Projects/_Personal Projects/MinhoDesignSystem/ProjectDash_MinhoDesignSystem.md`
-
-NAS에는 코드 열람본과 Git bundle, Obsidian에는 현재 상태·결정·작업 로그를 둔다. 상세 운영은 `docs/workflow.md` 참고.
+자격 증명, 개인 Figma 내보내기, 폰트 파일, 외부 사이트의 화면·이미지, 개인 기기의 절대 경로를 올리지 않는다.
+기존 포트폴리오 사이트(`smh2287.github.io`)와는 별개의 프로젝트이며 서로 수정하지 않는다.

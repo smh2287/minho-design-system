@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>기초 · Minho Design System</title>
+  <meta name="description" content="민호의 개인 디자인 시스템 작업장. 웹페이지 설계 논리를 잠정 토큰으로 직접 시험한다. 승인된 기본 양식 없음.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="../tokens/provisional.css">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script>try{var t=localStorage.getItem('mds.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="../">Minho Design System</a>
+      <span class="brand-note">잠정 작업 문서 · 승인된 기본 없음</span>
+      <button type="button" class="theme-btn" data-theme-btn hidden>화면: 기기 설정</button>
+      <nav class="site-nav" aria-label="주요 탐색">
+        <ul>
+          <li><a href="../">시작</a></li>
+          <li><a href="../foundations/" aria-current="page">기초</a></li>
+          <li><a href="../components/">부품</a></li>
+          <li><a href="../patterns/">패턴</a></li>
+          <li><a href="../lab/">실험</a></li>
+          <li><a href="../decisions/">결정</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <p class="eyebrow">기초 · <span class="status" data-s="lab">실험</span></p>
+        <h1>역할을 먼저 정하고, 값은 나중에 고른다</h1>
+        <p class="lead">아래 값은 이 사이트가 지금 실제로 쓰는 잠정 토큰이다. 원본은 저장소의 <code>tokens/provisional.css</code> 한 곳이고, 표의 값은 브라우저가 계산한 결과를 그대로 읽어 적는다. 역할 이름은 오래 가도록, 값은 쉽게 바꾸도록 나누었다.</p>
+      </div>
+
+      <section aria-labelledby="h-type">
+        <h2 id="h-type">글자 역할 <span class="status" data-s="lab">실험</span></h2>
+        <div class="rows type-rows">
+          <div><span class="k">큰 제목</span><span class="d sample" style="font-size:var(--t-display);line-height:var(--lh-tight);font-weight:var(--w-strong);letter-spacing:-0.02em">논리가 형태보다 먼저 Aa 123</span><span class="v mono">--t-display<br><span data-token="--t-display"></span></span></div>
+          <div><span class="k">구역 제목</span><span class="d sample" style="font-size:var(--t-title);line-height:var(--lh-tight);font-weight:var(--w-strong)">글자 역할 Type roles</span><span class="v mono">--t-title<br><span data-token="--t-title"></span></span></div>
+          <div><span class="k">소제목·머리글</span><span class="d sample" style="font-size:var(--t-sub);font-weight:var(--w-strong)">사용 조건 When to use</span><span class="v mono">--t-sub<br><span data-token="--t-sub"></span></span></div>
+          <div><span class="k">본문</span><span class="d sample">읽는 순서와 문서의 순서를 일치시킨다. 한 줄은 한글 서른여덟 자 안팎에서 끊는다.</span><span class="v mono">--t-body<br><span data-token="--t-body"></span></span></div>
+          <div><span class="k">레이블·보조</span><span class="d sample" style="font-size:var(--t-label);color:var(--c-text-2)">상태 · 값 · 날짜 2026-11-15</span><span class="v mono">--t-label<br><span data-token="--t-label"></span></span></div>
+        </div>
+        <p class="note">서체는 기기의 시스템 서체다. 포트폴리오에서 쓰인 넓은 라틴 제목체와 Montserrat는 후보일 뿐 적용하지 않았다. 정확한 패밀리·웨이트와 웹 사용 권리를 확인하기 전에는 폰트 파일을 저장소에 넣지 않는다. 한글과 라틴의 높이·무게 짝맞춤은 아직 비교하지 않았다.</p>
+      </section>
+
+      <section aria-labelledby="h-space">
+        <h2 id="h-space">간격 <span class="status" data-s="lab">실험</span></h2>
+        <div class="prose"><p>가까운 관계는 좁게, 구역 사이는 넓게. 4px을 기준으로 여덟 단계만 쓴다. 단계 수와 비율은 시험값이다.</p></div>
+        <div class="rows scale" style="margin-top:var(--s-5)">
+          <div><span class="k mono">--s-1</span><span class="d"><i style="width:var(--s-1)"></i></span><span class="v mono" data-token="--s-1"></span></div>
+          <div><span class="k mono">--s-2</span><span class="d"><i style="width:var(--s-2)"></i></span><span class="v mono" data-token="--s-2"></span></div>
+          <div><span class="k mono">--s-3</span><span class="d"><i style="width:var(--s-3)"></i></span><span class="v mono" data-token="--s-3"></span></div>
+          <div><span class="k mono">--s-4</span><span class="d"><i style="width:var(--s-4)"></i></span><span class="v mono" data-token="--s-4"></span></div>
+          <div><span class="k mono">--s-5</span><span class="d"><i style="width:var(--s-5)"></i></span><span class="v mono" data-token="--s-5"></span></div>
+          <div><span class="k mono">--s-6</span><span class="d"><i style="width:var(--s-6)"></i></span><span class="v mono" data-token="--s-6"></span></div>
+          <div><span class="k mono">--s-7</span><span class="d"><i style="width:var(--s-7)"></i></span><span class="v mono" data-token="--s-7"></span></div>
+          <div><span class="k mono">--s-8</span><span class="d"><i style="width:var(--s-8)"></i></span><span class="v mono" data-token="--s-8"></span></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-color">
+        <h2 id="h-color">색 역할 <span class="status" data-s="lab">실험</span></h2>
+        <div class="prose"><p>색 이름이 아니라 하는 일로 부른다. 지금은 무채색 여덟 역할뿐이고 <strong>강조색 역할은 일부러 비워 두었다.</strong> 강조색이 무슨 일을 맡을지가 먼저 정해져야 하기 때문이다(<a href="../decisions/#q2">질문 2</a>). 위의 ‘화면’ 단추로 밝은·어두운 값을 바꿔 볼 수 있다.</p></div>
+        <div class="rows" style="margin-top:var(--s-5)">
+          <div><span class="k">바탕</span><span class="d"><span class="sw" style="background:var(--c-bg)"></span> 페이지 전체</span><span class="v mono">--c-bg <span data-token="--c-bg"></span></span></div>
+          <div><span class="k">표면</span><span class="d"><span class="sw" style="background:var(--c-surface)"></span> 상세 패널, 견본 틀, 선택된 행</span><span class="v mono">--c-surface <span data-token="--c-surface"></span></span></div>
+          <div><span class="k">본문 글자</span><span class="d"><span class="sw" style="background:var(--c-text)"></span> 제목과 본문</span><span class="v mono">--c-text <span data-token="--c-text"></span></span></div>
+          <div><span class="k">보조 글자</span><span class="d"><span class="sw" style="background:var(--c-text-2)"></span> 레이블, 설명, 비활성</span><span class="v mono">--c-text-2 <span data-token="--c-text-2"></span></span></div>
+          <div><span class="k">경계</span><span class="d"><span class="sw" style="background:var(--c-line)"></span> 행과 구역 사이</span><span class="v mono">--c-line <span data-token="--c-line"></span></span></div>
+          <div><span class="k">강한 경계</span><span class="d"><span class="sw" style="background:var(--c-line-strong)"></span> 구역의 시작, 선택 표시</span><span class="v mono">--c-line-strong <span data-token="--c-line-strong"></span></span></div>
+          <div><span class="k">hover 바탕</span><span class="d"><span class="sw" style="background:var(--c-hover)"></span> 가리킨 행·단추</span><span class="v mono">--c-hover <span data-token="--c-hover"></span></span></div>
+          <div><span class="k">포커스</span><span class="d"><span class="sw" style="background:var(--c-focus)"></span> 키보드 초점 테두리</span><span class="v mono">--c-focus <span data-token="--c-focus"></span></span></div>
+        </div>
+        <p class="note">오류·성공·경고 역할은 아직 그 의미를 가진 화면이 없어서 만들지 않았다. 대비 수치는 측정 도구로 검증하지 않았다.</p>
+      </section>
+
+      <section aria-labelledby="h-line">
+        <h2 id="h-line">선·형태·움직임 <span class="status" data-s="lab">실험</span></h2>
+        <div class="rows">
+          <div><span class="k">선</span><span class="d">구역의 시작은 2px, 행 사이는 1px. 카드로 감싸는 대신 선과 정렬로 묶는다.</span><span class="v mono"><span data-token="--line"></span> / <span data-token="--line-strong"></span></span></div>
+          <div><span class="k">모서리</span><span class="d">반경 0. CSS의 기본값을 그대로 둔 것이지 ‘직각으로 결정’한 것이 아니다. <a href="../decisions/#q4">질문 4</a>에서 비교한다.</span><span class="v mono">--radius <span data-token="--radius"></span></span></div>
+          <div><span class="k">누르는 대상</span><span class="d">손가락으로 누르는 것은 최소 높이를 지킨다.</span><span class="v mono">--target <span data-token="--target"></span></span></div>
+          <div><span class="k">움직임</span><span class="d">상태가 바뀐 것을 잇는 짧은 전환 한 단계뿐이다. ‘동작 줄이기’ 설정에서는 0이 되고 조작은 그대로 성립한다.</span><span class="v mono">--dur <span data-token="--dur"></span></span></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="h-learn">
+        <h2 id="h-learn">다른 시스템에서 배운 원리</h2>
+        <div class="prose"><p>아래는 <strong>학습자료</strong>다. 원리를 배웠다는 뜻이며 그 사이트의 외형이나 수치를 채택했다는 뜻이 아니다. 열람 범위는 <a href="../decisions/#sources">결정 › 근거 자료</a>에 있다.</p></div>
+        <ul class="rows" style="margin-top:var(--s-5)">
+          <li><span class="k">IBM 2x Grid</span><span class="d">여백을 뺀 실제 영역을 균등 분할하고, 간격을 하나의 작은 단위의 배수로 잇는다. → 위 간격 단계의 출발점.</span><span class="v">원리</span></li>
+          <li><span class="k">Geist</span><span class="d">색을 이름이 아니라 배경·경계·글자의 단계와 상태로 나눈다. 표면마다 쓰는 조건을 함께 적는다. → 색 역할 표의 형식.</span><span class="v">원리</span></li>
+          <li><span class="k">Porsche</span><span class="d">토큰 원본은 하나, 소비하는 도구는 여럿. 부품 문서를 사용법·접근성·속성으로 나눈다. → 토큰 파일 한 곳 원칙.</span><span class="v">원리</span></li>
+          <li><span class="k">Carbon</span><span class="d">일을 돕는 움직임과 표현하는 움직임을 구분하고, 표현은 중요한 순간에만. → 움직임을 한 단계로 시작한 이유.</span><span class="v">원리</span></li>
+          <li><span class="k">Audi</span><span class="d">같은 정체성 안에서 상황에 따라 크게 말하거나 절제한다. 무엇이 고정이고 무엇이 변하는지 나눈다. → <a href="../decisions/#q3">질문 3</a>.</span><span class="v">원리</span></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>이 사이트의 모든 양식은 잠정이며 권위 있는 규격이 아니다. 원본: <a href="https://github.com/smh2287/minho-design-system">저장소</a> · 토큰: <a href="../tokens/provisional.css">tokens/provisional.css</a> · 외부 글꼴·추적·외부 요청 없음.</p>
+    </div>
+  </footer>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

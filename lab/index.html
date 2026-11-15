@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>실험 · Minho Design System</title>
+  <meta name="description" content="민호의 개인 디자인 시스템 작업장. 웹페이지 설계 논리를 잠정 토큰으로 직접 시험한다. 승인된 기본 양식 없음.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="../tokens/provisional.css">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script>try{var t=localStorage.getItem('mds.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="../">Minho Design System</a>
+      <span class="brand-note">잠정 작업 문서 · 승인된 기본 없음</span>
+      <button type="button" class="theme-btn" data-theme-btn hidden>화면: 기기 설정</button>
+      <nav class="site-nav" aria-label="주요 탐색">
+        <ul>
+          <li><a href="../">시작</a></li>
+          <li><a href="../foundations/">기초</a></li>
+          <li><a href="../components/">부품</a></li>
+          <li><a href="../patterns/">패턴</a></li>
+          <li><a href="../lab/" aria-current="page">실험</a></li>
+          <li><a href="../decisions/">결정</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <p class="eyebrow">실험</p>
+        <h1>실험안은 고치지 않고 옆에 새로 만든다</h1>
+        <p class="lead">여기 있는 것은 기본 양식이 아니다. 비교할 수 있도록 원본을 그대로 두고, 고칠 때는 새 폴더에 복사해서 만든다.</p>
+      </div>
+
+      <section aria-labelledby="h-list">
+        <h2 id="h-list">목록</h2>
+        <ul class="rows">
+          <li><a class="k" href="fable-v3/">모서리 _초안 v3</a><span class="d">Fable이 직접 만든 첫 시각 초안. 작업·전시·견본 세 화면, 모서리에 고정한 탐색, 민트·유리·모따기를 끄고 켜는 조작이 있다. 저장·삭제는 페이지 메모리 안의 시연이다. 한 글자도 바꾸지 않고 보존한다.</span><span class="v"><span class="status" data-s="keep">보존</span></span></li>
+          <li><a class="k" href="../">문서 사이트 v0</a><span class="d">지금 보고 있는 이 사이트. 무채색·시스템 서체·직각으로 ‘아직 정하지 않음’을 표시한 잠정 양식.</span><span class="v"><span class="status" data-s="lab">실험</span></span></li>
+        </ul>
+        <p class="note">초안 v3 바로 가기: <a href="fable-v3/#stage">전시 화면</a> · <a href="fable-v3/#spec">견본 화면</a> · <a href="fable-v3/#open">항목을 연 상태</a> · <a href="fable-v3/#menu">메뉴를 연 상태</a>. 초안에는 이 사이트로 돌아오는 링크가 없다. 브라우저의 뒤로 가기를 쓴다.</p>
+      </section>
+
+      <section aria-labelledby="h-diff">
+        <h2 id="h-diff">두 실험이 서로 다르게 답한 것</h2>
+        <ul class="rows">
+          <li><span class="k">탐색</span><span class="d">v3: 화면 모서리에 고정 · v0: 위쪽 한 줄</span><span class="v"><a href="../patterns/#h-nav">비교 조건</a></span></li>
+          <li><span class="k">강조색</span><span class="d">v3: 민트(끌 수 있음) · v0: 없음</span><span class="v"><a href="../decisions/#q2">질문 2</a></span></li>
+          <li><span class="k">모서리</span><span class="d">v3: 모따기 · v0: CSS 기본 직각</span><span class="v"><a href="../decisions/#q4">질문 4</a></span></li>
+          <li><span class="k">표면</span><span class="d">v3: 어두운 바탕과 유리(끌 수 있음) · v0: 불투명, 밝은·어두운 화면 모두</span><span class="v"><a href="../decisions/#q5">질문 5</a></span></li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="h-rule">
+        <h2 id="h-rule">새 실험을 올릴 때</h2>
+        <div class="prose"><ul>
+          <li><code>lab/이름/</code> 폴더를 새로 만든다. 기존 폴더는 덮어쓰지 않는다.</li>
+          <li>무엇을 비교하려는 실험인지 첫 줄에 적는다.</li>
+          <li>실제로 저장되지 않는 조작은 시연이라고 화면에 밝힌다.</li>
+          <li>민호가 고른 방향만 기초·부품으로 옮기고, 그때 표지를 <span class="status" data-s="review">검토</span> 또는 <span class="status" data-s="base">기본</span>으로 바꾼다.</li>
+        </ul></div>
+      </section>
+    </div>
+  </main>
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>이 사이트의 모든 양식은 잠정이며 권위 있는 규격이 아니다. 원본: <a href="https://github.com/smh2287/minho-design-system">저장소</a> · 토큰: <a href="../tokens/provisional.css">tokens/provisional.css</a> · 외부 글꼴·추적·외부 요청 없음.</p>
+    </div>
+  </footer>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

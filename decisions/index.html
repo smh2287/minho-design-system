@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>결정 · Minho Design System</title>
+  <meta name="description" content="민호의 개인 디자인 시스템 작업장. 웹페이지 설계 논리를 잠정 토큰으로 직접 시험한다. 승인된 기본 양식 없음.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="../tokens/provisional.css">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script>try{var t=localStorage.getItem('mds.theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="../">Minho Design System</a>
+      <span class="brand-note">잠정 작업 문서 · 승인된 기본 없음</span>
+      <button type="button" class="theme-btn" data-theme-btn hidden>화면: 기기 설정</button>
+      <nav class="site-nav" aria-label="주요 탐색">
+        <ul>
+          <li><a href="../">시작</a></li>
+          <li><a href="../foundations/">기초</a></li>
+          <li><a href="../components/">부품</a></li>
+          <li><a href="../patterns/">패턴</a></li>
+          <li><a href="../lab/">실험</a></li>
+          <li><a href="../decisions/" aria-current="page">결정</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <p class="eyebrow">결정</p>
+        <h1>취향을 묻지 않고, 무엇이 무엇을 책임지는지 묻는다</h1>
+        <p class="lead">아래 다섯 질문은 포트폴리오와 모아 둔 레퍼런스에서 실제로 보이는 긴장에서 나왔다. ‘어느 쪽이 좋은가’가 아니라 ‘이쪽을 고르면 무엇을 치르는가’를 적었다. <strong>지금 전부 고를 필요는 없다.</strong> 첫 질문만 권한다. 나머지는 첫 답에 따라 모양이 달라진다.</p>
+      </div>
+
+      <section class="q" id="q1" aria-labelledby="hq1">
+        <h2 id="hq1"><span class="num">Q1</span> 제목의 정체성은 어디에 실려 있는가 <span class="first">먼저 권하는 질문</span></h2>
+        <div class="prose">
+          <p><strong>본 것.</strong> 포트폴리오 PDF에서 제목은 세 가지가 겹쳐 만든다. 넓은 대문자 글자, 한 단어를 굵기로 둘로 가르는 방식(<span class="mono">MO|CAMPER _CMF</span>, <span class="mono">EGO|NEST</span>, <span class="mono">LUNAR PM / ROBO|KICKS</span>), 그리고 민트색. 그런데 웹 포트폴리오 화면의 큰 제목은 평범한 굵은 산세리프로 보였다. 넓은 글자가 빠지자 인상이 달라졌다. 그리고 이 문서 사이트처럼 한글이 제목인 곳에서는 그 넓은 라틴 서체가 애초에 닿지 않는다.</p>
+        </div>
+        <p class="ask">세 가지 중 하나만 남겨야 한다면, 넓은 글자가 사라져도 굵기 분절만으로 당신의 제목인가? 아니면 넓은 글자가 없으면 이미 다른 사람의 제목인가?</p>
+        <div class="spec-grid" role="group" aria-label="제목 방식 비교 견본">
+          <article class="spec">
+            <header><span class="tag">A</span> 서체가 책임진다</header>
+            <div class="stage">
+              <p class="tt wide">Mocamper</p>
+              <p class="tt" style="font-weight:700">기초 글자</p>
+              <div><p class="cap">좁은 칸(232px)에서</p><div class="narrow"><p class="tt wide">Mocamper _cmf</p></div></div>
+            </div>
+            <div class="cons"><b>얻는 것</b>포트폴리오와 같은 인상이 가장 직접 이어진다.<b>치르는 것</b>웹에서 쓸 수 있는 넓은 서체와 권리를 확보해야 한다. 한글 제목은 그 서체를 못 쓰므로 라틴과 한글의 목소리가 갈린다. 넓은 글자는 줄을 많이 먹어 좁은 화면에서 잘리거나 작아진다.</div>
+          </article>
+          <article class="spec">
+            <header><span class="tag">B</span> 구조가 책임진다</header>
+            <div class="stage">
+              <p class="tt seg"><b>MO</b>CAMPER</p>
+              <p class="tt seg"><b>기초</b> 글자</p>
+              <div><p class="cap">좁은 칸(232px)에서</p><div class="narrow"><p class="tt seg"><b>MO</b>CAMPER _CMF</p></div></div>
+            </div>
+            <div class="cons"><b>얻는 것</b>어떤 서체에서도, 한글에서도 같은 규칙이 선다. 폰트 파일 없이 지금 시작할 수 있다.<b>치르는 것</b>포트폴리오의 첫인상은 약해진다. ‘어디서 끊는가’의 규칙을 써야 한다. 뜻 단위가 없는 제목에서는 분절이 억지가 된다.</div>
+          </article>
+          <article class="spec">
+            <header><span class="tag">C</span> 자리를 나눈다</header>
+            <div class="stage">
+              <div><p class="cap">전시 제목</p><p class="tt wide">Egonest</p></div>
+              <div><p class="cap">문서·도구 제목</p><p class="tt seg"><b>부품</b> 목록</p></div>
+              <div><p class="cap">좁은 칸(232px)에서</p><div class="narrow"><p class="tt seg"><b>부품</b> 목록</p></div></div>
+            </div>
+            <div class="cons"><b>얻는 것</b>전시의 강한 인상과 문서의 읽기 쉬움을 둘 다 지킨다.<b>치르는 것</b>목소리가 둘이 된다. 어느 화면이 ‘전시’인지 경계 규칙을 관리해야 하고, 경계가 흐려지면 일관성이 가장 먼저 무너진다. A의 서체 확보 비용도 그대로 남는다.</div>
+          </article>
+        </div>
+        <p class="note">견본의 ‘넓은 글자’는 시스템 서체에 자간을 벌린 <strong>근사</strong>다. 포트폴리오의 실제 서체가 아니며 그 서체의 이름·웨이트는 아직 확인하지 못했다. 이 견본으로 판단할 수 있는 것은 폭이 치르는 값(줄 길이, 한글과의 짝)이지 서체의 아름다움이 아니다.</p>
+        <div class="prose" style="margin-top:var(--s-5)">
+          <p><strong>왜 이것부터인가.</strong> 색·모서리·효과는 글자 위에 얹힌다. 제목이 서체에 기대는지 구조에 기대는지가 정해져야 서체 확보가 선행 작업인지, 한글 짝맞춤을 어디까지 할지, 글자 역할을 몇 단계로 나눌지가 정해진다. 그리고 이 질문은 효과 없이 글자만으로 비교할 수 있다.</p>
+          <p><strong>답하는 방법.</strong> 고르기 어렵다면 포트폴리오 제목 하나를 머릿속에서 본문과 같은 서체로 바꿔 보자. 그래도 당신의 것으로 읽히면 B쪽, 낯선 사람의 것으로 읽히면 A쪽이다.</p>
+        </div>
+        <div class="memo"><label for="m1">Q1 메모 (이 브라우저에만 저장)</label><textarea id="m1" data-memo="q1" data-title="제목의 정체성"></textarea></div>
+      </section>
+
+      <section class="q" id="q2" aria-labelledby="hq2">
+        <h2 id="hq2"><span class="num">Q2</span> 강조색은 무슨 일을 하는가</h2>
+        <div class="prose">
+          <p><strong>본 것.</strong> 포트폴리오에서 민트는 제목, 자기소개 본문 전체, 서명, 바닥의 캡션, 웹 화면의 PROJECTS 링크, 모바일 화면에서 고른 이미지의 테두리에 모두 쓰인다. 인쇄물에서는 문제가 없다. 누를 것이 없으니까. 화면에서는 한 색이 ‘이름표’, ‘누를 수 있음’, ‘지금 선택됨’을 동시에 뜻하게 된다. Geist는 같은 색을 배경·경계·글자의 단계와 상태로 쪼개어 이 혼동을 피한다(학습자료).</p>
+        </div>
+        <p class="ask">민트가 화면에 보일 때 사용자가 읽어야 하는 뜻은 ‘민호의 것’인가, ‘여기를 누를 수 있다’인가? 둘 다라면 무엇으로 둘을 구별하는가?</p>
+        <div class="spec-grid" role="group" aria-label="강조색의 역할 비교 견본">
+          <article class="spec">
+            <header><span class="tag">A</span> 서명 전용</header>
+            <div class="stage flush"><div class="q2 sig"><div class="dk"><span class="h">SPECTRUM</span><span class="lk">링크</span><span class="rw">선택된 줄</span></div><div class="lt"><span class="h">SPECTRUM</span><span class="lk">링크</span><span class="rw">선택된 줄</span></div></div></div>
+            <div class="cons"><b>얻는 것</b>민트가 보이면 곧 정체성이다. 조작 상태는 선·굵기로만 말하므로 색 없이도 통한다.<b>치르는 것</b>제목 없는 화면(설정, 표)에서는 민트가 사라져 평범해 보일 수 있다.</div>
+          </article>
+          <article class="spec">
+            <header><span class="tag">B</span> 조작 전용</header>
+            <div class="stage flush"><div class="q2 act"><div class="dk"><span class="h">SPECTRUM</span><span class="lk">링크</span><span class="rw">선택된 줄</span></div><div class="lt"><span class="h">SPECTRUM</span><span class="lk">링크</span><span class="rw">선택된 줄</span></div></div></div>
+            <div class="cons"><b>얻는 것</b>민트 = 누를 수 있거나 선택된 것. 도구 화면에서 길잡이가 분명하다.<b>치르는 것</b>포트폴리오의 민트 제목이라는 가장 눈에 띄는 서명을 포기한다.</div>
+          </article>
+          <article class="spec">
+            <header><span class="tag">C</span> 둘 다</header>
+            <div class="stage flush"><div class="q2 both"><div class="dk"><span class="h">SPECTRUM</span><span class="lk">링크</span><span class="rw">선택된 줄</span></div><div class="lt"><span class="h">SPECTRUM</span><span class="lk">링크</span><span class="rw">선택된 줄</span></div></div></div>
+            <div class="cons"><b>얻는 것</b>지금의 포트폴리오와 가장 가깝다.<b>치르는 것</b>색만으로는 뜻을 가릴 수 없으니 밑줄·선·크기 같은 형태 규칙이 반드시 따라붙어야 한다. 민트가 많아질수록 강조의 힘은 줄어든다.</div>
+          </article>
+        </div>
+        <p class="note">어느 쪽이든 따라오는 사실 하나: 견본 오른쪽 칸처럼 민트 글자는 흰 바탕에서 거의 읽히지 않는다(어림 계산으로 명암비 약 1.6:1, 어두운 바탕에서는 약 10:1). 민트를 <em>글자색</em>으로 쓰기로 하면 어두운 바탕이 사실상 함께 정해진다. 밝은 화면도 원한다면 민트는 선·면에만 쓰거나, 밝은 화면용 짙은 짝색이 따로 필요하다. 민트 값은 캡처에서 눈으로 옮긴 근사이며 정확한 색이 아니다.</p>
+        <div class="memo"><label for="m2">Q2 메모 (이 브라우저에만 저장)</label><textarea id="m2" data-memo="q2" data-title="강조색의 일"></textarea></div>
+      </section>
+
+      <section class="q" id="q3" aria-labelledby="hq3">
+        <h2 id="hq3"><span class="num">Q3</span> 전시의 여백과 작업의 밀도, 무엇이 고정인가</h2>
+        <div class="prose">
+          <p><strong>본 것.</strong> 포트폴리오 안에 이미 두 가지 밀도가 있다. 차량 이미지가 화면을 채우고 글은 귀퉁이의 몇 줄뿐인 장면이 있고, 경력 장면처럼 연도·회사·역할이 표처럼 촘촘한 장면이 있다. 둘은 같은 사람의 것으로 읽힌다. Audi의 글자 지침은 같은 정체성 안에서 크게 말하는 방식과 절제하는 방식을 상황에 따라 고르게 한다(학습자료).</p>
+        </div>
+        <p class="ask">촘촘한 경력 장면과 이미지 가득한 장면이 같은 사람의 것으로 읽히게 만든 것은 무엇인가? 그것이 이 시스템에서 바뀌면 안 되는 것이다. 간격인가, 정렬인가, 레이블을 쓰는 방식인가?</p>
+        <div class="rows alts">
+          <div><span class="tag">A</span><span class="k">밀도 하나</span><span class="d">모든 화면이 같은 간격을 쓴다. 규칙은 가장 단순하지만 전시는 답답해지거나 도구는 헐거워진다. 둘 중 하나가 손해를 본다.</span></div>
+          <div><span class="tag">B</span><span class="k">같은 단계, 다른 구간</span><span class="d">간격 단계는 하나를 공유하고 전시는 큰 쪽, 작업은 작은 쪽 구간을 쓴다. 글자 역할과 정렬축은 고정. 구간을 고르는 기준을 문서로 써야 하고 화면마다 두 번 확인해야 한다.</span></div>
+          <div><span class="tag">C</span><span class="k">화면마다 자유</span><span class="d">전시 페이지는 장면마다 새로 짠다. 표현의 폭은 가장 넓지만 그 부분은 시스템이 아니게 된다. 재사용도, 다른 사람이나 AI가 이어 만드는 일도 어렵다.</span></div>
+        </div>
+        <div class="memo"><label for="m3">Q3 메모 (이 브라우저에만 저장)</label><textarea id="m3" data-memo="q3" data-title="밀도와 여백"></textarea></div>
+      </section>
+
+      <section class="q" id="q4" aria-labelledby="hq4">
+        <h2 id="hq4"><span class="num">Q4</span> 날카로움은 어디에 사는가</h2>
+        <div class="prose">
+          <p><strong>본 것.</strong> 포트폴리오의 차량은 면이 꺾이는 각진 형태가 많고 서명도 사선이다. 그런데 지면의 사각 틀과 이미지 자체는 평범한 직각이고, 날카로운 인상은 가는 선, 작은 대문자 레이블, 엄격한 정렬에서도 온다. 한편 문서화가 잘 된 시스템(Geist, Porsche)의 화면은 둥근 반경을 쓴다. 초안 v3는 모서리를 사선으로 잘랐다.</p>
+        </div>
+        <p class="ask">단추의 모서리를 전부 평범한 직각으로 바꿔도 화면이 여전히 날카로운가? 그렇다면 날카로움은 모서리가 아니라 글자와 정렬에 있다.</p>
+        <div class="spec-grid" role="group" aria-label="모서리 형태 비교 견본">
+          <article class="spec">
+            <header><span class="tag">A</span> 직각</header>
+            <div class="stage q4"><span class="shape">열기</span><div><span class="shape ring">초점이 온 상태</span></div></div>
+            <div class="cons"><b>얻는 것</b>구현 비용 0. 초점 테두리·경계선·그림자가 그대로 맞는다. 선과 정렬이 주인공이 된다.<b>치르는 것</b>형태만으로는 서명이 없다. 정체성을 글자와 배치가 전부 져야 한다.</div>
+          </article>
+          <article class="spec">
+            <header><span class="tag">B</span> 모따기</header>
+            <div class="stage q4"><span class="shape cut">열기</span><div><span class="shape cut ring">초점이 온 상태</span></div></div>
+            <div class="cons"><b>얻는 것</b>작은 단추 하나에서도 알아볼 수 있는 형태 서명.<b>치르는 것</b>위 견본의 아래 단추에는 초점 테두리가 있지만 보이지 않는다. 잘라낸 모양이 테두리·그림자까지 잘라내기 때문이다. 부품마다 초점과 경계를 따로 그려야 하고, 이미지·입력란·작은 표지에 모두 적용할지 정해야 한다.</div>
+          </article>
+          <article class="spec">
+            <header><span class="tag">C</span> 작은 반경</header>
+            <div class="stage q4"><span class="shape r6">열기</span><div><span class="shape r6 ring">초점이 온 상태</span></div></div>
+            <div class="cons"><b>얻는 것</b>익숙하고 손에 편한 인상. 다른 라이브러리와 섞어 쓰기 쉽다.<b>치르는 것</b>흔한 제품 화면과 구별이 줄어든다. 각진 사물을 다루는 작업과 결이 어긋날 수 있다.</div>
+          </article>
+        </div>
+        <div class="memo"><label for="m4">Q4 메모 (이 브라우저에만 저장)</label><textarea id="m4" data-memo="q4" data-title="날카로움의 자리"></textarea></div>
+      </section>
+
+      <section class="q" id="q5" aria-labelledby="hq5">
+        <h2 id="hq5"><span class="num">Q5</span> 빛의 효과가 꺼진 화면도 민호의 것인가</h2>
+        <div class="prose">
+          <p><strong>본 것.</strong> 가장 강하게 긍정한 레퍼런스는 Dorian Lods의 굴절 효과다. 기록 영상의 한 장면에서 그 효과는 화면 한가운데의 제목 하나에 걸려 있었고 그 밖의 글은 작고 조용했다. Carbon은 표현적인 움직임을 중요한 순간에만 쓰라고 한다(학습자료). Maxime Heckel의 글은 그 효과가 화면을 한 번 더 그려서 얻는 것임을 보여 준다. 즉 공짜가 아니다.</p>
+        </div>
+        <p class="ask">설정 화면이나 긴 글처럼 효과가 하나도 없는 페이지를 보고도 같은 시스템이라고 알아볼 수 있어야 하는가? 그래야 한다면 효과는 정체성이 아니라 정체성 위의 한 장면이다.</p>
+        <div class="rows alts">
+          <div><span class="tag">A</span><span class="k">한 장면에만</span><span class="d">효과는 전시 페이지의 한 지점(대표 제목이나 작품)에만 건다. 나머지는 글자와 배치로 선다. 성능·가독성 위험이 한곳에 모이고 ‘동작 줄이기’ 대체도 하나만 만들면 된다. 평범한 화면이 심심하다는 느낌은 감수한다.</span></div>
+          <div><span class="tag">B</span><span class="k">전체에 옅게</span><span class="d">패널·메뉴 전반에 약한 유리를 깐다. 어디서나 분위기가 이어지지만 글자가 놓이는 모든 자리에서 가독성을 다시 확인해야 하고, 낮은 사양 기기의 부담과 밝은 화면에서의 효과 약화를 치른다.</span></div>
+          <div><span class="tag">C</span><span class="k">기본은 없음</span><span class="d">시스템 본체에는 효과가 없고 실험 폴더에서만 다룬다. 기초를 가장 빨리 굳힐 수 있지만 가장 좋아한 레퍼런스가 시스템 밖에 오래 머문다.</span></div>
+        </div>
+        <p class="note">이 사이트에는 굴절·유리 효과가 없다. 효과의 품질이나 성능은 여기서 판단할 수 없다.</p>
+        <div class="memo"><label for="m5">Q5 메모 (이 브라우저에만 저장)</label><textarea id="m5" data-memo="q5" data-title="효과의 자리"></textarea></div>
+      </section>
+
+      <section aria-labelledby="h-memo">
+        <h2 id="h-memo">메모 내보내기</h2>
+        <div class="prose"><p>위 메모는 <strong>지금 쓰는 이 브라우저에만</strong> 저장된다. 저장소, 다른 기기, AI 에이전트에게 자동으로 전달되지 않는다. 결정으로 반영하려면 아래 단추로 글을 모아 직접 전달해야 한다. 브라우저 자료를 지우면 함께 사라진다.</p></div>
+        <div class="btn-row" style="margin-top:var(--s-4)">
+          <button type="button" class="btn quiet" data-memo-export>메모를 글로 모아 복사</button>
+          <button type="button" class="btn quiet" data-memo-clear>이 브라우저의 메모 지우기</button>
+        </div>
+        <p class="live" data-memo-status role="status" aria-live="polite"></p>
+        <div class="memo"><textarea data-memo-out hidden readonly aria-label="모은 메모"></textarea></div>
+      </section>
+
+      <section aria-labelledby="h-log">
+        <h2 id="h-log">정해진 것과 정해지지 않은 것</h2>
+        <h3>민호가 직접 정한 것</h3>
+        <ul class="rows">
+          <li><span class="k">중심</span><span class="d">웹페이지를 설계하는 논리. 재질·효과 이미지 모음이 아니다.</span><span class="v">2026-11-15</span></li>
+          <li><span class="k">순서</span><span class="d">글자·위계·배치·조작이 먼저, 효과는 그다음.</span><span class="v">2026-11-15</span></li>
+          <li><span class="k">제외</span><span class="d">Upstash는 미감 레퍼런스에서 뺀다(값싼 인상).</span><span class="v">2026-11-15</span></li>
+          <li><span class="k">공개</span><span class="d">이 저장소와 사이트를 공개로 운영한다. 기존 포트폴리오 사이트와는 별개다.</span><span class="v">2026-11-15</span></li>
+          <li><span class="k">보존</span><span class="d">Fable 초안 v3는 원본 그대로 둔다.</span><span class="v">2026-11-15</span></li>
+        </ul>
+        <h3>승인되지 않은 제안</h3>
+        <ul class="rows">
+          <li><span class="k">이름 ‘모서리’</span><span class="d">초안의 가제. 시스템의 정식 이름은 없다.</span><span class="v"><span class="status" data-s="lab">실험</span></span></li>
+          <li><span class="k">민트 · 검정 · 유리 · 모따기</span><span class="d">초안 v3의 시각 언어. 질문 2·4·5에서 다룬다.</span><span class="v"><span class="status" data-s="lab">실험</span></span></li>
+          <li><span class="k">이 사이트의 양식</span><span class="d">무채색, 시스템 서체, 직각, 위쪽 탐색, 간격 여덟 단계.</span><span class="v"><span class="status" data-s="lab">실험</span></span></li>
+          <li><span class="k">서체</span><span class="d">넓은 라틴 제목체와 Montserrat는 후보. 이름·웨이트·권리 미확인.</span><span class="v">미확인</span></li>
+        </ul>
+      </section>
+
+      <section id="sources" aria-labelledby="h-src">
+        <h2 id="h-src">근거 자료와 열람 범위</h2>
+        <div class="prose"><p>자료를 두 가지로 나눈다. <strong>프로젝트 레퍼런스</strong>는 이 시스템의 인상과 형태를 검토하는 근거이고, <strong>학습자료</strong>는 원리를 배우는 곳이다. 같은 출처도 용도가 다르면 따로 적는다. 외부 사이트의 이미지나 화면은 이 저장소에 싣지 않았다.</p></div>
+        <h3>프로젝트 레퍼런스 — 대상: 이 디자인 시스템</h3>
+        <ul class="rows">
+          <li><span class="k">민호 포트폴리오</span><span class="d">참고할 부분: 제목 방식, 레이블과 캡션의 위계, 민트의 쓰임, 두 가지 밀도. PDF 다섯 장면과 웹 화면 두 장(넓은 화면·좁은 화면)을 캡처로 보았다. 실제 사이트를 열어 조작하지는 않았다.</span><span class="v">캡처 열람</span></li>
+          <li><a class="k" href="https://dorianlods.com">Dorian Lods</a><span class="d">참고할 부분: 전시 제목 한 곳에 건 굴절 효과의 강도와 자리. 수상 기록 페이지의 영상 한 장면을 캡처로 보았다. 사이트 본체와 hover 조작은 확인하지 못했다.</span><span class="v">기록 캡처 1장</span></li>
+          <li><a class="k" href="https://maximeheckel.com/">Maxime Heckel</a><span class="d">참고할 부분: 작품과 구현 설명을 분리하는 방식. 이번에는 조사 기록의 글만 읽었고 화면은 직접 보지 않았다.</span><span class="v">기록만</span></li>
+        </ul>
+        <h3>학습자료 — 외형 채택 아님</h3>
+        <ul class="rows">
+          <li><a class="k" href="https://vercel.com/geist">Geist</a><span class="d">배운 것: 색·표면을 역할과 상태로 나누어 적는 문서 형식, 화면 크기에 따른 상세 표시의 구분. Materials 문서 화면 한 장을 캡처로 보았다.</span><span class="v">캡처 1장 + 기록</span></li>
+          <li><a class="k" href="https://designsystem.porsche.com">Porsche Design System</a><span class="d">배운 것: 토큰 원본 하나를 여러 도구가 쓰는 구조, 토큰·부품·패턴의 분리. Tokens 소개 화면 한 장을 캡처로 보았다.</span><span class="v">캡처 1장 + 기록</span></li>
+          <li><a class="k" href="https://www.ibm.com/design/language/2x-grid/">IBM 2x Grid</a><span class="d">배운 것: 실제 영역의 균등 분할, 한 단위의 배수로 잇는 간격.</span><span class="v">기록만</span></li>
+          <li><a class="k" href="https://styleguide.audi.com/">Audi</a><span class="d">배운 것: 고정 요소와 상황별 변형의 구분.</span><span class="v">기록만</span></li>
+          <li><span class="k">Carbon (motion)</span><span class="d">배운 것: 일을 돕는 움직임과 표현하는 움직임의 구분.</span><span class="v">기록만</span></li>
+        </ul>
+        <p class="note">‘기록만’은 앞선 조사에서 다른 작업자가 실제 페이지를 읽고 남긴 사실 기록을 읽었다는 뜻이다. 이 사이트를 만든 작업자가 그 페이지를 직접 열어 본 것이 아니다. 캡처는 정지 화면이므로 움직임·조작·현재 상태를 확인한 근거가 될 수 없다. Upstash는 민호의 평가에 따라 미감 근거에서 제외했다.</p>
+      </section>
+
+      <section id="verify" aria-labelledby="h-ver">
+        <h2 id="h-ver">확인한 것과 못 한 것</h2>
+        <div class="prose"><p>이 사이트의 검증 범위는 저장소의 <code>docs/deploy-report-2026-11-16.md</code>에 적었다. 요약하면: 내부 링크, 스크립트 문법, 배포 후 각 페이지의 응답을 확인했고, 실제 휴대폰·화면 읽기 프로그램·여러 브라우저에서의 조작은 확인하지 못했다.</p></div>
+      </section>
+    </div>
+  </main>
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>이 사이트의 모든 양식은 잠정이며 권위 있는 규격이 아니다. 원본: <a href="https://github.com/smh2287/minho-design-system">저장소</a> · 토큰: <a href="../tokens/provisional.css">tokens/provisional.css</a> · 외부 글꼴·추적·외부 요청 없음.</p>
+    </div>
+  </footer>
+  <script src="../assets/site.js"></script>
+</body>
+</html>
