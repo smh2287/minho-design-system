@@ -18,19 +18,19 @@ GitHub 공식 meta API의 공개 호스트 키를 사용하고 strict host verif
 PC origin은 SSH URL이고 repo-local core.sshCommand로 이 키만 선택한다.
 실제 fetch와 fast-forward, push dry-run에 성공했다. 자동 주기 동기화는 구성하지 않았다.
 
-## NAS 프로젝트 홈 — 사용자 요청, 연결 대기
+## NAS 프로젝트 홈 — 2026-11-15 확정
 
-사용자가 임의의 `E:\Design`보다 기존 NAS project 아래를 프로젝트 홈으로 사용하기를 요청했다.
-정확한 NAS project 경로는 확인 중이다. NAS API 인증은 HTTP 401로 만료 상태이며 재로그인이 필요하다.
-현재 파일은 이동하지 않았다. 접근 복구 후 다음 구조로 배치한다 (경로는 제안).
+민호가 `_Personal Projects` 아래 폴더 생성을 승인했다.
 
-- NAS `<기존 project>/MinhoDesignSystem/`: 프로젝트 안내·큰 자산·산출물·복원용 Git bundle.
-- GitHub: 코드·문서 변경 이력의 기준 원본.
-- PC 로컬 Git clone: 실행·편집용. NAS 홈과 링크로 연결하며 `.git`을 Drive 양방향 동기화하지 않는다.
+- NAS 홈: `/volume1/02.S_Minho/01_Projects/_Personal Projects/MinhoDesignSystem`
+- `code/`: 현재 코드·문서의 열람용 스냅샷. `.git`·자격 증명은 복사하지 않는다.
+- `backups/`: 복원용 Git bundle과 파일 SHA256 목록. 자동 백업이 아닌 수동 검증 시점의 백업이다.
+- 루트 `README.md`: 위치·역할·연결 안내.
+- Obsidian: `01_Projects/_Personal Projects/MinhoDesignSystem/ProjectDash_MinhoDesignSystem.md`에서 상태·다음 행동 추적.
 
-NAS 홈이 생겼다고 GitHub 업로드·PC pull/push·백업이 모두 같은 기능이 되는 것은 아니다.
-NAS 파일 업로드 후 실제 다운로드 해시 검증을 해야 전달 완료로 기록한다.
-기존 `E:\Design` 사본은 새 배치 확인 전까지 보존하고 현재 경로를 임의 변경하지 않는다.
+일반 NAS 파일 접근은 `ssh nas`를 사용한다. Drive API 로그인 만료는 SSH 접근과 무관하며 재로그인이 필요하지 않다.
+활성 Git 작업은 PC/Linux 로컬 사본에서 한다. NAS와 `.git` 양방향 동기화를 구성하지 않는다.
+기존 PC 경로는 보존하며 NAS 홈과 구별한다. NAS 코드 사본은 수정 전 Git 개발 사본으로 가져와 변경 이력을 남긴다.
 
 ## 작업 흐름
 
@@ -44,4 +44,4 @@ NAS 파일 업로드 후 실제 다운로드 해시 검증을 해야 전달 완�
 
 현재는 파일 직접 열기 또는 README의 로컬 서버. GitHub 저장소는 렌더링된 사이트가 아니다.
 GitHub 연동 미리보기는 접근 제어·호스팅 환경을 정해 별도 연결한다. 비공개 저장소가 사이트 비공개까지 보장하지 않는다.
-NAS 백업과 외부 웹 배포는 미구성 상태로 명시하고, GitHub 업로드를 이들의 완료로 간주하지 않는다.
+NAS 수동 스냅샷·bundle과 외부 웹 배포·자동 동기화는 별개다. 외부 웹 배포와 자동 주기 동기화는 아직 미구성이다.

@@ -27,3 +27,10 @@
 - 사용자 요청: 프로젝트 홈은 임의의 Design 폴더보다 NAS의 기존 project 아래를 사용. 정확한 경로·NAS 접근 복구 전 이동 보류.
 - PC GitHub 인증: 계정 전체 GCM 변경 대신 저장소 전용 deploy key 구성. 개인키는 PC 로컬에만 보관.
 - NAS project 홈 / GitHub 코드 기준 / PC 실행 사본을 구분.
+
+## 2026-11-15 NAS·Obsidian 홈 확정
+
+- 민호 직접 승인: `_Personal Projects/MinhoDesignSystem` 생성·배치. 이전 경로 미확정/접근 복구 대기는 종료한다.
+- NAS는 프로젝트 홈, GitHub는 코드 이력 기준, 로컬은 개발·실행 사본.
+- Obsidian에 프로젝트를 만들어 진행·결정·다음 행동을 추적한다.
+- SSH 접근 정상. Drive 로그인 만료를 NAS 접근 불가로 안내한 이전 기록은 잘못된 진단이다.

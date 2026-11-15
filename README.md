@@ -27,3 +27,11 @@
 - `references/`: 출처·용도·원본 위치 기록. 외부 자산 자체는 업로드하지 않음
 
 프로젝트별 프레임워크를 아직 고정하지 않는다. 실제 페이지에서 공통 규칙이 검증되면 재사용 부품을 분리한다.
+
+## 프로젝트 홈
+
+NAS: `/volume1/02.S_Minho/01_Projects/_Personal Projects/MinhoDesignSystem`
+
+Obsidian: `01_Projects/_Personal Projects/MinhoDesignSystem/ProjectDash_MinhoDesignSystem.md`
+
+NAS에는 코드 열람본과 Git bundle, Obsidian에는 현재 상태·결정·작업 로그를 둔다. 상세 운영은 `docs/workflow.md` 참고.
