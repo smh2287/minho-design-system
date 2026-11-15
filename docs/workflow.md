@@ -9,6 +9,13 @@
 - NAS: 대형 원본과 복원 가능한 별도 백업 역할. 아직 백업 자동화·복원 시험을 구성하지 않았다.
 - Drive: 필요할 때 공유용 PDF·이미지. 별도 규칙 원본으로 쓰지 않음.
 
+## 현재 연결 상태
+
+Linux 사본의 GitHub push와 원격 커밋 확인은 완료했다. PC 사본은 Git bundle로 같은 커밋을 복제했고 GitHub origin을 설정했다.
+PC SSH 세션의 직접 GitHub 조회는 Windows Credential Manager 접근 오류로 실패했다.
+PC의 직접 pull/push는 로그인된 Windows 대화형 세션에서 Git 인증을 확인한 뒤 사용한다. 현재 자동 동기화가 된 상태로 보지 않는다.
+그 전에는 Linux에서 커밋·push를 계속할 수 있고 PC 전달은 Git bundle로 한다. 자격 증명은 복사하지 않는다.
+
 ## 작업 흐름
 
 1. 작업 전 `git status`, 깨끗한 사본에서 `git pull --ff-only`.
