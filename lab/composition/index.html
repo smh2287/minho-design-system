@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>구성 두 안 비교 · 실험 · Minho Design System</title>
+<meta name="description" content="같은 화면을 제목 서체와 배치만 바꿔 두 안으로 놓아 보는 실험. 굴절은 강한 굴절(C)로 고정. 승인된 양식이 아니다.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<style>
+/* 구성 두 안 비교 — 상태: 실험. 외부 요청·외부 글꼴·이미지 파일 없음.
+   두 장면은 같은 문구·같은 조작·같은 그리기 코드·같은 재질 값(C)을 쓴다. 달라지는 것은 제목 서체와 배치뿐이다. */
+:root {
+  color-scheme: dark;
+  --bg: #0c0c0d;
+  --panel: #131314;
+  --text: #ecece8;
+  --text-2: #a9a9a2;
+  --line: #34342f;
+  --line-strong: #ecece8;
+  --accent: #1fe5c5;            /* 강조색 후보(민트 근사값). 조작·중요 표시에만 쓴다. */
+  --sans: system-ui, -apple-system, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Noto Sans CJK KR", sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  /* B안 제목: 기기에 있는 획 대비가 큰 세리프를 차례로 찾는다. 서체 파일은 싣지 않는다. */
+  --serif: Didot, "Bodoni 72", "Bodoni MT", "Sitka Display", "Sitka Heading", "Noto Serif Display", "Noto Serif", Constantia, Georgia, "Noto Serif CJK KR", "Noto Serif KR", serif;
+  --dur: 140ms;
+}
+@media (prefers-reduced-motion: reduce) { :root { --dur: 0ms; } }
+*, *::before, *::after { box-sizing: border-box; border-radius: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.7 var(--sans); word-break: keep-all; overflow-wrap: anywhere; }
+h1, h2, h3, p, ul, dl, dd, dt, fieldset, legend { margin: 0; padding: 0; }
+fieldset { border: 0; min-width: 0; }
+ul { list-style: none; }
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover { text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+[hidden] { display: none !important; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 16px; top: -100px; background: var(--text); color: var(--bg); padding: 10px 16px; z-index: 30; }
+.skip:focus { top: 8px; }
+.wrap { max-width: 92rem; margin: 0 auto; padding: 0 24px; }
+@media (max-width: 480px) { .wrap { padding: 0 16px; } }
+
+/* 머리 — 평범한 문서 글자 */
+.top { padding: 20px 0 28px; }
+.crumbs { font-size: 0.8125rem; color: var(--text-2); display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; }
+.crumbs a { display: inline-flex; align-items: center; min-height: 44px; }
+.st { border: 1px dashed var(--text-2); padding: 3px 8px; line-height: 1; font-size: 0.8125rem; color: var(--text-2); white-space: nowrap; }
+.top h1 { font-size: 1.5rem; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; margin-top: 8px; }
+.top .lead { max-width: 40em; color: var(--text-2); margin-top: 12px; }
+
+/* 전환 막대 */
+.bar { position: sticky; top: 0; z-index: 20; background: var(--bg); border-top: 2px solid var(--line-strong); border-bottom: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 0 24px; }
+.seg { display: flex; flex-wrap: wrap; }
+.seg label { position: relative; display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px 0 0; margin-right: 12px; cursor: pointer; color: var(--text-2); border-bottom: 3px solid transparent; }
+.seg input { position: absolute; opacity: 0; width: 100%; height: 100%; left: 0; top: 0; margin: 0; cursor: pointer; }
+.k { font-family: var(--mono); font-size: 0.8125rem; border: 1px solid currentColor; padding: 0 6px; line-height: 1.5; }
+.seg label:hover { color: var(--text); }
+.seg label:has(input:checked) { color: var(--text); font-weight: 700; border-bottom-color: var(--accent); }
+.seg label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; }
+.bar .now { font-size: 0.8125rem; color: var(--text-2); margin-left: auto; padding: 8px 0; }
+
+/* 장면 공통 */
+#scenes { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; padding: 24px 0 8px; scroll-margin-top: 120px; }
+.scene { container-type: inline-size; border: 1px solid var(--line); background: var(--bg); min-width: 0; }
+.scene-tag { display: grid; gap: 8px; padding: 12px 16px 14px; border-bottom: 1px solid var(--line); font-size: 0.8125rem; }
+.scene-tag .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.scene-tag .n { font-weight: 700; font-size: 0.9375rem; }
+.scene-tag .why { color: var(--text-2); max-width: 62em; line-height: 1.65; }
+.stage { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; background: var(--bg); }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; display: block; }
+.stage > * { min-width: 0; }
+.anchor { min-height: 280px; }
+.eyebrow { font-size: 0.8125rem; color: var(--text-2); letter-spacing: 0.04em; }
+.sub { font-size: 1.125rem; line-height: 1.5; }
+.body { color: var(--text-2); max-width: 30em; margin-top: 12px; }
+
+.pick { max-width: 30em; }
+.pick legend { font-size: 0.8125rem; color: var(--text-2); padding-bottom: 8px; }
+.pick legend + label { border-top: 1px solid var(--line-strong); }
+.pick label { position: relative; display: grid; grid-template-columns: 16px 1fr auto; gap: 0 12px; align-items: center; min-height: 48px; padding: 6px 12px 6px 0; border-bottom: 1px solid var(--line); border-left: 4px solid transparent; cursor: pointer; transition: background var(--dur); }
+.pick input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.pick .m { text-align: center; color: var(--accent); visibility: hidden; font-size: 0.625rem; }
+.pick .v { font-size: 0.8125rem; color: var(--text-2); }
+.pick label:hover { background: #1a1a1b; }
+.pick label:has(input:checked) { border-left-color: var(--accent); background: var(--panel); font-weight: 700; }
+.pick label:has(input:checked) .m { visibility: visible; }
+.pick label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { min-height: 44px; padding: 0 20px; border: 2px solid var(--line-strong); background: var(--text); color: var(--bg); font-weight: 700; cursor: pointer; transition: background var(--dur), border-color var(--dur); }
+.btn:hover, .btn:active { background: var(--accent); border-color: var(--accent); }
+.btn.quiet { background: var(--bg); color: var(--text); border: 1px solid var(--text-2); font-weight: 400; }
+.btn.quiet:hover, .btn.quiet:active { background: var(--bg); border-color: var(--accent); }
+.spec { display: grid; grid-template-columns: auto minmax(0, 1fr); font-size: 0.8125rem; border-top: 1px solid var(--line-strong); max-width: 30em; }
+.spec dt, .spec dd { padding: 7px 0; border-bottom: 1px solid var(--line); line-height: 1.5; }
+.spec dt { color: var(--text-2); padding-right: 20px; white-space: nowrap; }
+.spec dd { font-family: var(--mono); text-align: right; }
+
+/* ── A안: 여백 포스터 ─────────────────────────────────────────────
+   제목은 직선만으로 직접 그린 넓은 대문자(SVG). 조작과 수치는 접어서 여백 뒤에 둔다. */
+.stage.a { --h: 15.5cqi; padding: 20px; gap: 0; grid-template-areas: "eyebrow" "anchor" "title" "text" "ctl"; }
+.a .eyebrow { grid-area: eyebrow; }
+.a .anchor { grid-area: anchor; }
+.a .title { grid-area: title; display: flex; flex-wrap: wrap; align-items: flex-start; gap: calc(var(--h) * 0.4) calc(var(--h) * 0.9); margin: 12px 0 0; line-height: 0; color: var(--text); }
+.a .title .w { display: block; height: calc(var(--h) * 1.21); width: auto; max-width: 100%; flex: none; }
+.a .a-text { grid-area: text; margin-top: 36px; }
+.a .a-ctl { grid-area: ctl; margin-top: 36px; display: grid; gap: 0; }
+.a .a-ctl .btns { margin-bottom: 28px; }
+.fold { border-top: 1px solid var(--line); min-width: 0; }
+.fold:last-child { border-bottom: 1px solid var(--line); }
+.fold summary { list-style: none; display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; font-size: 0.875rem; color: var(--text-2); }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::before { content: "+"; font-family: var(--mono); width: 16px; text-align: center; color: var(--text); }
+.fold[open] summary::before { content: "−"; color: var(--accent); }
+.fold summary:hover, .fold[open] summary { color: var(--text); }
+.fold summary .v { margin-left: auto; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-2); text-align: right; }
+.fold .in { padding: 4px 0 20px; }
+.fold .pick legend { padding-bottom: 0; }
+.fold .pick legend + label { margin-top: 0; }
+
+@container (min-width: 760px) {
+  .stage.a { --h: 7.6cqi; padding: 44px 48px 36px; min-height: clamp(640px, 86vh, 900px);
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); grid-template-rows: auto minmax(300px, 1fr) auto auto;
+    grid-template-areas: "eyebrow anchor" "text anchor" "title title" "ctl ctl"; }
+  .a .a-text { margin-top: 20px; max-width: 24em; font-size: 0.9375rem; }
+  .a .a-text .sub { font-size: 1rem; }
+  .a .title { margin-top: 28px; }
+  .a .a-ctl { margin-top: 44px; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 0 32px; align-items: start; }
+  .a .a-ctl .btns { margin-bottom: 0; padding-top: 2px; }
+  .a .fold, .a .fold:last-child { border-bottom: 0; }
+}
+
+/* ── B안: 괘선 색인판 ─────────────────────────────────────────────
+   제목은 획 대비가 큰 세리프(기기 서체). 조작과 수치를 접지 않고 가는 선으로 칸을 나눠 한 화면에 둔다. */
+.stage.b { grid-template-areas: "band" "title" "text" "anchor" "plate" "rail"; }
+.b .band { grid-area: band; display: flex; flex-wrap: wrap; gap: 2px 20px; padding: 12px 20px; border-bottom: 1px solid var(--line); font: 400 0.75rem/1.6 var(--mono); color: var(--text-2); letter-spacing: 0; }
+.b .band .eyebrow { font: inherit; letter-spacing: 0; color: var(--text); }
+.b .band span:last-child { margin-left: auto; }
+.b .title { grid-area: title; font-family: var(--serif); font-weight: 400; font-size: clamp(3.25rem, 19cqi, 9rem); line-height: 0.92; letter-spacing: -0.015em; padding: 28px 20px 24px; margin-left: -0.04em; }
+.b .title i { font-style: italic; }
+.b .b-text { grid-area: text; padding: 0 20px 28px; }
+.b .anchor { grid-area: anchor; border-top: 1px solid var(--line); min-height: 300px; }
+.b .plate { grid-area: plate; font: 400 0.75rem/1.6 var(--mono); color: var(--text-2); padding: 8px 20px 12px; border-bottom: 1px solid var(--line); }
+.b .b-rail { grid-area: rail; padding: 24px 20px 28px; display: grid; gap: 24px; align-content: start; }
+.b .b-rail .pick, .b .b-rail .spec { max-width: none; }
+
+@container (min-width: 760px) {
+  .stage.b { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-rows: auto auto minmax(400px, 1fr) auto;
+    grid-template-areas: "band band" "title text" "anchor rail" "plate rail"; }
+  .b .band { padding: 10px 28px; }
+  .b .title { font-size: clamp(4rem, 10.4cqi, 9.5rem); padding: 36px 28px 32px; }
+  .b .b-text { padding: 44px 28px 32px; border-left: 1px solid var(--line); align-self: stretch; display: grid; align-content: end; }
+  .b .anchor { min-height: 0; }
+  .b .plate { padding: 8px 28px 12px; border-bottom: 0; border-top: 1px solid var(--line); }
+  .b .b-rail { border-top: 1px solid var(--line); border-left: 1px solid var(--line); padding: 28px; background: rgba(12, 12, 13, 0.6); }
+}
+
+/* 아래 설명 */
+.notes { padding: 40px 0 72px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; }
+.notes > section { min-width: 0; }
+.notes h2 { font-size: 1.25rem; line-height: 1.3; margin-bottom: 16px; }
+.notes .prose { max-width: 40em; display: grid; gap: 12px; }
+.notes .prose li { padding-left: 16px; position: relative; }
+.notes .prose a { display: inline-block; padding: 11px 0; margin: -11px 0; }
+.notes .prose li::before { content: "–"; position: absolute; left: 0; color: var(--text-2); }
+.tbl { width: 100%; border-collapse: collapse; border-top: 2px solid var(--line-strong); font-size: 0.875rem; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 12px 16px 12px 0; border-bottom: 1px solid var(--line); font-weight: 400; }
+.tbl thead th { color: var(--text-2); font-size: 0.8125rem; }
+.tbl tbody th { font-weight: 700; white-space: nowrap; }
+.scroll { overflow-x: auto; }
+.scroll .tbl { min-width: 44rem; }
+.scroll:focus-visible { outline-offset: 0; }
+.small { font-size: 0.8125rem; color: var(--text-2); line-height: 1.6; max-width: 46em; margin-top: 12px; }
+.imp { border-left: 4px solid var(--accent); padding-left: 12px; }
+code { font-family: var(--mono); font-size: 0.875em; }
+footer { border-top: 1px solid var(--line); padding: 12px 0 40px; font-size: 0.8125rem; color: var(--text-2); }
+footer a { display: inline-flex; align-items: center; min-height: 44px; }
+</style>
+</head>
+<body>
+<a class="skip" href="#scenes">장면으로 건너뛰기</a>
+
+<header class="top">
+  <div class="wrap">
+    <p class="crumbs"><a href="../">← 실험 목록</a><a href="../../">Minho Design System</a><a href="../optical-compare/#c">광학 세기 비교</a><span class="st">실험 · 승인 아님</span></p>
+    <h1>구성 두 안 비교 — 같은 화면, 서체와 배치만 다르게</h1>
+    <p class="lead">문구·조작·색·직각 모서리·굴절(강한 굴절 C)은 두 안이 완전히 같다. 달라지는 것은 제목 서체와 배치, 그리고 밀도를 숨기느냐 드러내느냐뿐이다. 둘 다 실험안이며 어느 쪽도 기본 양식이 아니다.</p>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <fieldset class="seg" id="view">
+      <legend class="vh">구성안 선택</legend>
+      <label><input type="radio" name="view" value="a" checked><span class="k">A</span>여백 포스터</label>
+      <label><input type="radio" name="view" value="b"><span class="k">B</span>괘선 색인판</label>
+      <label><input type="radio" name="view" value="all"><span class="k">A·B</span>이어서 보기</label>
+    </fieldset>
+    <p class="now" id="now" role="status" aria-live="polite"></p>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div id="scenes" data-view="a">
+
+      <article class="scene" data-comp="a" aria-labelledby="tag-a">
+        <header class="scene-tag">
+          <p class="row"><span class="k">A</span><span class="n" id="tag-a">여백 포스터 · 직선으로 그린 제목</span><span class="st">실험안 · 미승인</span></p>
+          <p class="why">제목은 서체 파일 없이 직선과 45° 모따기만으로 직접 그린 넓은 대문자다. 가는 획 사이에 굵은 ‘OF’ 하나를 끼워 굵기로 끊는다. 날카로움을 글자 모양 자체에 둔다.<br>화면에는 제목과 프리즘, 짧은 글, 단추 두 개만 남긴다. 고르는 목록과 재질 수치는 맨 아래 가는 줄 뒤에 접어 두어 밀도를 여백 뒤로 숨긴다.</p>
+        </header>
+        <div class="stage a">
+          <canvas aria-hidden="true"></canvas>
+          <p class="eyebrow">전시 03 — 광학 견본</p>
+          <div class="anchor" aria-hidden="true"></div>
+          <h2 class="title"><span class="vh">Edge of light</span><svg class="w" viewBox="-3.8 -10.5 515.5 121" width="515.5" height="121" aria-hidden="true" focusable="false"><path d="M100 0L0 0L0 100L100 100M0 50L78 50M136 0L212 0L236 24L236 76L212 100L136 100ZM372 24L348 0L296 0L272 24L272 76L296 100L348 100L372 76L372 52L322 52M508 0L408 0L408 100L508 100M408 50L486 50" fill="none" stroke="currentColor" stroke-width="7.5" stroke-linejoin="miter" stroke-miterlimit="4"/></svg><svg class="w" viewBox="-10.5 -10.5 257 121" width="257" height="121" aria-hidden="true" focusable="false"><path d="M24 0L76 0L100 24L100 76L76 100L24 100L0 76L0 24ZM236 0L136 0L136 100M136 50L214 50" fill="none" stroke="currentColor" stroke-width="21" stroke-linejoin="miter" stroke-miterlimit="4"/></svg><svg class="w" viewBox="-3.8 -10.5 537.5 121" width="537.5" height="121" aria-hidden="true" focusable="false"><path d="M0 0L0 100L86 100M122 0L122 100M258 24L234 0L182 0L158 24L158 76L182 100L234 100L258 76L258 52L208 52M294 0L294 100M394 0L394 100M294 50L394 50M430 0L530 0M480 0L480 100" fill="none" stroke="currentColor" stroke-width="7.5" stroke-linejoin="miter" stroke-miterlimit="4"/></svg></h2>
+          <div class="a-text">
+            <p class="sub">빛이 모서리를 지날 때 생기는 일</p>
+            <p class="body">유리 아래 놓인 선은 면의 기울기만큼 옮겨지고, 파장마다 조금씩 다르게 옮겨진다. 색은 칠한 것이 아니라 그 차이에서 나온다.</p>
+          </div>
+          <div class="a-ctl">
+            <div class="btns">
+              <button type="button" class="btn" data-act="rot">프리즘 15° 돌리기</button>
+              <button type="button" class="btn quiet" data-act="reset">처음 각도로</button>
+            </div>
+            <details class="fold">
+              <summary>유리 아래에 놓을 것<span class="v" data-f="bg">빛줄기</span></summary>
+              <div class="in">
+                <fieldset class="pick">
+                  <legend class="vh">유리 아래에 놓을 것</legend>
+                  <label><input type="radio" name="bg-a" value="beam" checked><span class="m" aria-hidden="true">■</span><span>빛줄기</span><span class="v">흰 선 하나</span></label>
+                  <label><input type="radio" name="bg-a" value="rule"><span class="m" aria-hidden="true">■</span><span>괘선</span><span class="v">촘촘한 눈금</span></label>
+                  <label><input type="radio" name="bg-a" value="none"><span class="m" aria-hidden="true">■</span><span>빈 바탕</span><span class="v">꺾을 것이 없음</span></label>
+                </fieldset>
+              </div>
+            </details>
+            <details class="fold">
+              <summary>재질 수치<span class="v" data-f="short"></span></summary>
+              <div class="in">
+                <dl class="spec">
+                  <dt>유리</dt><dd data-f="glass"></dd>
+                  <dt>면 기울기</dt><dd data-f="face"></dd>
+                  <dt>바탕과의 간격</dt><dd data-f="gap"></dd>
+                  <dt>옮겨짐</dt><dd data-f="shift"></dd>
+                  <dt>색 번짐</dt><dd data-f="spread"></dd>
+                  <dt>각도</dt><dd data-f="rot"></dd>
+                </dl>
+              </div>
+            </details>
+          </div>
+        </div>
+      </article>
+
+      <article class="scene" data-comp="b" aria-labelledby="tag-b" hidden>
+        <header class="scene-tag">
+          <p class="row"><span class="k">B</span><span class="n" id="tag-b">괘선 색인판 · 세리프 제목</span><span class="st">실험안 · 미승인</span></p>
+          <p class="why">제목은 기기에 들어 있는 획 대비가 큰 세리프를 대소문자 섞어 쓰고, ‘of’만 기울인다. 글자 안의 가는 선과 굵은 선의 차이로 개성을 내고, 날카로움은 글자 밖의 직각 칸과 가는 괘선에 둔다.<br>조작과 재질 수치를 접지 않고 오른쪽 칸에 모두 꺼내 놓는다. 밀도는 높지만 선으로 칸을 나눠 순서를 준다. 프리즘은 틀 안의 견본으로 놓인다.</p>
+        </header>
+        <div class="stage b">
+          <canvas aria-hidden="true"></canvas>
+          <div class="band"><p class="eyebrow">전시 03 — 광학 견본</p><span>재질 C · 강한 굴절</span><span data-f="short"></span></div>
+          <h2 class="title">Edge <i>of</i><br>light</h2>
+          <div class="b-text">
+            <p class="sub">빛이 모서리를 지날 때 생기는 일</p>
+            <p class="body">유리 아래 놓인 선은 면의 기울기만큼 옮겨지고, 파장마다 조금씩 다르게 옮겨진다. 색은 칠한 것이 아니라 그 차이에서 나온다.</p>
+          </div>
+          <div class="anchor" aria-hidden="true"></div>
+          <p class="plate" data-f="plate"></p>
+          <div class="b-rail">
+            <fieldset class="pick">
+              <legend>유리 아래에 놓을 것</legend>
+              <label><input type="radio" name="bg-b" value="beam" checked><span class="m" aria-hidden="true">■</span><span>빛줄기</span><span class="v">흰 선 하나</span></label>
+              <label><input type="radio" name="bg-b" value="rule"><span class="m" aria-hidden="true">■</span><span>괘선</span><span class="v">촘촘한 눈금</span></label>
+              <label><input type="radio" name="bg-b" value="none"><span class="m" aria-hidden="true">■</span><span>빈 바탕</span><span class="v">꺾을 것이 없음</span></label>
+            </fieldset>
+            <dl class="spec">
+              <dt>유리</dt><dd data-f="glass"></dd>
+              <dt>면 기울기</dt><dd data-f="face"></dd>
+              <dt>바탕과의 간격</dt><dd data-f="gap"></dd>
+              <dt>옮겨짐</dt><dd data-f="shift"></dd>
+              <dt>색 번짐</dt><dd data-f="spread"></dd>
+              <dt>각도</dt><dd data-f="rot"></dd>
+              <dt>제목 서체</dt><dd data-f="font">기기 세리프</dd>
+            </dl>
+            <div class="btns">
+              <button type="button" class="btn" data-act="rot">프리즘 15° 돌리기</button>
+              <button type="button" class="btn quiet" data-act="reset">처음 각도로</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <noscript><p class="small imp">이 견본은 스크립트로 캔버스에 프리즘을 그린다. 스크립트가 꺼져 있으면 A안의 글자와 조작 틀만 보이고, 프리즘과 B안은 보이지 않는다.</p></noscript>
+
+    <div class="notes">
+      <section aria-labelledby="n-how">
+        <h2 id="n-how">보는 법</h2>
+        <ul class="prose">
+          <li>위 막대에서 A·B를 바꾸면 같은 문구와 같은 프리즘이 다른 서체·다른 배치로 놓인다.</li>
+          <li>‘이어서 보기’는 두 안을 제 폭 그대로 위아래로 놓는다. 옆으로 나란히 놓으면 둘 다 좁은 화면용 배치로 바뀌어 비교가 흐려지기 때문이다. 이때 조작(아래에 놓을 것, 각도)은 두 안에 함께 적용된다.</li>
+          <li>A안의 ‘유리 아래에 놓을 것’과 ‘재질 수치’는 줄을 눌러야 펼쳐진다. 접힌 상태가 A안의 기본 모습이다.</li>
+          <li>주소 끝에 <code>#a</code> <code>#b</code> <code>#all</code>을 붙이면 그 상태로 열린다.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="n-diff">
+        <h2 id="n-diff">두 안이 다르게 답한 것</h2>
+        <div class="scroll" tabindex="0" role="region" aria-labelledby="n-diff">
+          <table class="tbl">
+            <thead><tr><th scope="col">항목</th><th scope="col">A 여백 포스터</th><th scope="col">B 괘선 색인판</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">제목 서체</th><td>직접 그린 직선 대문자. 폭이 넓고 곡선이 없다. 가는 획 + 굵은 ‘OF’. 어느 기기에서나 같은 모양.</td><td>기기의 획 대비가 큰 세리프. 대소문자 혼용, ‘of’만 기울임. 기기마다 다른 서체가 잡힌다.</td></tr>
+              <tr><th scope="row">부제 · 본문</th><td>시스템 고딕(두 안 동일). 넓은 화면에서 한 단계 작게.</td><td>시스템 고딕(두 안 동일). 수치와 띠는 고정폭 글자.</td></tr>
+              <tr><th scope="row">배치</th><td>칸을 나누는 선이 없다. 제목이 아래쪽에서 폭 전체를 쓰고, 프리즘은 오른쪽 위 빈 곳에 놓인다.</td><td>7:5 두 칸을 가는 선으로 나눈다. 위 띠 → 제목과 글 → 프리즘 틀과 조작 칸.</td></tr>
+              <tr><th scope="row">밀도</th><td>숨긴다. 목록과 수치는 접힌 두 줄 뒤에 있다.</td><td>드러낸다. 목록·수치·단추가 한 화면에 모두 보인다.</td></tr>
+              <tr><th scope="row">날카로움이 있는 곳</th><td>글자 모양(직선, 45° 모따기).</td><td>칸과 괘선(직각, 1px 선), 세리프의 가는 획.</td></tr>
+              <tr><th scope="row">걸리는 점</th><td>아홉 글자(E D G O F L I H T)만 그렸다. 다른 제목이나 한글 제목에는 그대로 쓸 수 없다. 접힌 조작은 찾아야 보인다.</td><td>서체가 기기에 따라 바뀌어 인상이 일정하지 않다. 한 화면에 선과 글자가 많다.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small">B안 제목에 지금 이 기기에서 잡힌 서체: <b id="font-now">확인하지 못함</b>. 서체 이름은 글자 폭을 재서 추정한 것이다.</p>
+      </section>
+
+      <section aria-labelledby="n-fix">
+        <h2 id="n-fix">두 안에서 고정한 것</h2>
+        <ul class="prose">
+          <li>굴절: <a href="../optical-compare/#c">광학 세기 비교</a>의 C(강한 굴절)와 같은 재질 값·같은 그리기 코드. 무거운 플린트 유리 근사(SF11 계열), 면 기울기 36°, 간격 2.2. 가만히 있을 때도 빛줄기의 색 분산이 보인다. 색은 파장별 굴절 계산에서 나오며 따로 칠하지 않았다.</li>
+          <li>프리즘의 크기는 놓인 자리의 크기에 맞춰 정해진다. 그래서 옮겨짐·색 번짐의 픽셀 값은 두 안에서 조금 다르다. 유리와 면 기울기는 같다.</li>
+          <li>문구, 조작의 종류(아래에 놓을 것 세 가지, 15° 돌리기, 처음 각도로), 무채색 바탕, 조명 방향, 그림자.</li>
+          <li>모서리는 전부 직각. 둥근 모서리 없음. CSS 유리 효과(뒤 흐림·반투명 겹침으로 만든 유리)는 쓰지 않았다. 흐림은 그림자와 빛줄기의 번짐에만 있다.</li>
+          <li>강조색은 선택 표시·초점 테두리·누르는 순간·펼친 표시에만 쓴다. 값은 민트 후보의 근사이며 확정이 아니다.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="n-lim">
+        <h2 id="n-lim">이 견본의 한계</h2>
+        <ul class="prose">
+          <li>두 안 모두 실험안이다. 민호가 고르기 전에는 어느 쪽도 기초·부품으로 옮기지 않는다. C 굴절을 선호한다는 것 말고는 서체도 배치도 승인된 것이 없다.</li>
+          <li>서체와 배치를 한꺼번에 바꿨다. A의 서체에 B의 배치를 붙인 조합, 그 반대 조합은 여기에 없다. 어느 쪽이 마음에 드는지가 서체 때문인지 배치 때문인지는 이 견본만으로 가를 수 없다.</li>
+          <li>A안 제목은 글자가 아니라 그림(SVG)이다. 화면 읽기 프로그램에는 숨긴 글자 ‘Edge of light’가 대신 읽힌다. 글자처럼 고르거나 복사할 수 없다.</li>
+          <li>굴절은 물리 광학 시뮬레이션이 아니다. 계산과 근사의 구분은 광학 세기 비교 페이지에 적은 것과 같다.</li>
+          <li>어두운 바탕만 만들었다. 움직이는 그림은 없다.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap"><p>실험 상태. 여기 있는 어떤 값도 기본 양식이 아니다. <a href="../">실험 목록</a> · <a href="../../decisions/">결정</a> · 외부 글꼴·추적·외부 요청·이미지 파일 없음.</p></div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* 재질은 두 안에서 하나로 고정: 광학 세기 비교의 C와 같은 값. */
+  var C = { key: 'C', name: '강한 굴절', glass: { label: 'SF11 계열 근사', A: 1.7387, B: 0.01597 }, face: 36, gap: 2.2 };
+  var COMP = { a: 'A 여백 포스터', b: 'B 괘선 색인판' };
+  var BG = { beam: '빛줄기', rule: '괘선', none: '빈 바탕' };
+  var N = 16, L0 = 400, L1 = 700, BASE_ROT = -24;
+  var LIGHT = [-0.4915, -0.5617, 0.6655];   /* 왼쪽 위에서 오는 넓은 조명 (y는 아래 방향) */
+  var state = { view: 'a', bg: 'beam', rot: 0 };
+
+  /* 파장 → 선형 sRGB 가중치 (CIE 1931 색맞춤함수의 해석적 근사, Wyman·Sloan·Shirley 2013) */
+  function g(x, m, s1, s2) { var t = (x - m) / (x < m ? s1 : s2); return Math.exp(-0.5 * t * t); }
+  function lambdaAt(i) { return L0 + (L1 - L0) * (i + 0.5) / N; }
+  var WGT = (function () {
+    var w = new Float32Array(N * 3), sum = [0, 0, 0], i, c;
+    for (i = 0; i < N; i++) {
+      var l = lambdaAt(i);
+      var X = 1.056 * g(l, 599.8, 37.9, 31.0) + 0.362 * g(l, 442.0, 16.0, 26.7) - 0.065 * g(l, 501.1, 20.4, 26.2);
+      var Y = 0.821 * g(l, 568.8, 46.9, 40.5) + 0.286 * g(l, 530.9, 16.3, 31.1);
+      var Z = 1.217 * g(l, 437.0, 11.8, 36.0) + 0.681 * g(l, 459.0, 26.0, 13.8);
+      var rgb = [3.2406 * X - 1.5372 * Y - 0.4986 * Z, -0.9689 * X + 1.8758 * Y + 0.0415 * Z, 0.0557 * X - 0.2040 * Y + 1.0570 * Z];
+      for (c = 0; c < 3; c++) { var v = Math.max(0, rgb[c]); w[i * 3 + c] = v; sum[c] += v; }
+    }
+    for (i = 0; i < N; i++) for (c = 0; c < 3; c++) w[i * 3 + c] /= sum[c];
+    return w;
+  })();
+  function ior(gl, nm) { var um = nm / 1000; return gl.A + gl.B / (um * um); }
+  var DEC = new Float32Array(256);
+  for (var di = 0; di < 256; di++) DEC[di] = Math.pow(di / 255, 2.2);
+  var ENC = new Uint8Array(4097);
+  for (var ei = 0; ei <= 4096; ei++) ENC[ei] = Math.round(255 * Math.pow((ei / 4096) * (ei / 4096), 1 / 2.2));
+  function enc(v) { return v <= 0 ? 0 : v >= 1 ? 255 : ENC[(Math.sqrt(v) * 4096 + 0.5) | 0]; }
+
+  /* 한쪽 면 가운데에서의 옮겨짐(px). 아래 그리기와 같은 식. */
+  function shiftAt(o, nm, W) {
+    var n = ior(o.glass, nm), phi = o.face * Math.PI / 180, slope = Math.tan(phi);
+    var inside = phi - Math.asin(Math.sin(phi) / n);
+    var s = n * Math.sin(inside); if (s >= 1) return NaN;
+    return Math.tan(inside) * (slope * W * 0.5) + Math.tan(Math.asin(s)) * (o.gap * W);
+  }
+
+  function Scene(el) {
+    this.el = el; this.comp = el.getAttribute('data-comp');
+    this.stage = el.querySelector('.stage');
+    this.canvas = el.querySelector('canvas');
+    this.anchor = el.querySelector('.anchor');
+    this.ctx = this.canvas.getContext('2d');
+    this.base = document.createElement('canvas');   /* 바탕 면과 선 */
+    this.back = document.createElement('canvas');   /* 바탕 + 그림자 */
+    this.geo = null;
+    var self = this;
+    this.ro = new ResizeObserver(function () { self.layout(); });
+    this.ro.observe(this.stage);
+  }
+  Scene.prototype.layout = function () {
+    var sr = this.stage.getBoundingClientRect(), ar = this.anchor.getBoundingClientRect();
+    if (sr.width < 2 || sr.height < 2) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = Math.max(28, Math.min(80, Math.min(ar.width, ar.height) * 0.125));
+    var L = Math.min(ar.width * 0.38, ar.height * 0.6, W * 4.6);
+    dpr = Math.max(1, Math.min(dpr, Math.sqrt(260000 / (4 * L * W))));   /* 한 번 그리는 시간을 묶어 두기 위한 상한 */
+    var w = Math.round(sr.width * dpr), h = Math.round(sr.height * dpr);
+    this.geo = {
+      dpr: dpr, w: w, h: h, cssW: sr.width, cssH: sr.height,
+      aw: ar.width, ah: ar.height,
+      cx: ar.left - sr.left + ar.width / 2, cy: ar.top - sr.top + ar.height / 2,
+      W: W, L: L
+    };
+    if (this.canvas.width !== w || this.canvas.height !== h) { this.canvas.width = w; this.canvas.height = h; }
+    this.drawBase(); this.render(); this.caption();
+  };
+  /* 바탕: 직접 그린 무채색 면. 왼쪽 위에서 오는 약한 빛, 직각 판 하나, 그 위의 선. */
+  Scene.prototype.drawBase = function () {
+    var G = this.geo, c = this.base; if (!G) return;
+    c.width = G.w; c.height = G.h;
+    var x = c.getContext('2d', { willReadFrequently: true }); x.setTransform(G.dpr, 0, 0, G.dpr, 0, 0);
+    x.fillStyle = '#0c0c0d'; x.fillRect(0, 0, G.cssW, G.cssH);
+    var R = Math.max(G.aw, G.ah) * 0.95;
+    var gr = x.createRadialGradient(G.cx - G.aw * 0.22, G.cy - G.ah * 0.3, 0, G.cx - G.aw * 0.22, G.cy - G.ah * 0.3, R);
+    gr.addColorStop(0, 'rgba(255,255,255,0.085)'); gr.addColorStop(0.55, 'rgba(255,255,255,0.03)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    x.fillStyle = gr; x.fillRect(0, 0, G.cssW, G.cssH);
+    var pw = Math.min(G.aw * 0.86, G.L * 2 + G.W * 5), ph = Math.min(G.ah * 0.8, G.L * 1.3 + G.W * 5);
+    var px = Math.round(G.cx - pw / 2), py = Math.round(G.cy - ph / 2); pw = Math.round(pw); ph = Math.round(ph);
+    x.fillStyle = 'rgba(255,255,255,0.028)'; x.fillRect(px, py, pw, ph);
+    x.strokeStyle = 'rgba(255,255,255,0.20)'; x.lineWidth = 1; x.strokeRect(px + 0.5, py + 0.5, pw - 1, ph - 1);
+    if (state.bg === 'rule') {
+      var step = Math.max(8, Math.round(G.W / 4)), i = 0, y, xx;
+      for (y = py + step; y < py + ph - 2; y += step, i++) {
+        x.fillStyle = (i % 5 === 4) ? 'rgba(255,255,255,0.62)' : 'rgba(255,255,255,0.22)';
+        x.fillRect(px + 1, y, pw - 2, 1);
+      }
+      for (xx = px + step * 5; xx < px + pw - 2; xx += step * 5) { x.fillStyle = 'rgba(255,255,255,0.22)'; x.fillRect(xx, py + 1, 1, ph - 2); }
+    } else if (state.bg === 'beam') {
+      var t = Math.max(2, Math.round(G.W * 0.05)), by = Math.round(G.cy - t / 2);
+      x.save(); x.shadowColor = 'rgba(255,255,255,0.55)'; x.shadowBlur = G.W * 0.22 * G.dpr;
+      x.fillStyle = '#ffffff'; x.fillRect(px + 12, by, pw - 24, t); x.restore();
+      x.fillStyle = 'rgba(255,255,255,0.34)'; x.fillRect(px + 12, Math.round(G.cy + G.W * 1.1), pw - 24, 1);
+      x.fillRect(px + 12, Math.round(G.cy - G.W * 1.1), pw - 24, 1);
+    }
+  };
+  Scene.prototype.render = function () {
+    var G = this.geo; if (!G) return;
+    var o = C, rot = (BASE_ROT + state.rot) * Math.PI / 180;
+    var k = G.dpr, w = G.w, h = G.h, cos = Math.cos(rot), sin = Math.sin(rot);
+    var Lp = G.L * k, Wp = G.W * k, cx = G.cx * k, cy = G.cy * k, i, f;
+
+    /* 1. 바탕 + 그림자(연출: 윤곽을 흐리게 옮긴 것. 흐림은 여기에만 쓴다) */
+    var b = this.back; if (b.width !== w || b.height !== h) { b.width = w; b.height = h; }
+    var bx = b.getContext('2d');
+    bx.setTransform(1, 0, 0, 1, 0, 0); bx.drawImage(this.base, 0, 0);
+    bx.save(); bx.translate(cx + 0.34 * Wp - 20000, cy + 0.44 * Wp); bx.rotate(rot);
+    bx.shadowColor = 'rgba(0,0,0,0.5)'; bx.shadowBlur = 0.6 * Wp; bx.shadowOffsetX = 20000;
+    bx.fillStyle = '#000'; bx.fillRect(-Lp, -Wp, Lp * 2, Wp * 2); bx.restore();
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0); this.ctx.drawImage(b, 0, 0);
+
+    /* 2. 면마다, 파장마다 시선이 옮겨지는 양 (스넬의 법칙, 두 경계) */
+    var slope = Math.tan(o.face * Math.PI / 180), gap = o.gap * Wp, nlen = Math.sqrt(slope * slope + 1);
+    var d1x = [new Float32Array(N), new Float32Array(N)], d1y = [new Float32Array(N), new Float32Array(N)];
+    var o2x = [new Float32Array(N), new Float32Array(N)], o2y = [new Float32Array(N), new Float32Array(N)];
+    var live = [new Uint8Array(N), new Uint8Array(N)], refl = [], rimK = [], M = 0;
+    for (f = 0; f < 2; f++) {
+      var s = f ? 1 : -1, ny0 = s * slope / nlen, nz = 1 / nlen;
+      var nx = -sin * ny0, ny = cos * ny0;
+      var rd = (2 * nz * nx) * LIGHT[0] + (2 * nz * ny) * LIGHT[1] + (2 * nz * nz - 1) * LIGHT[2];
+      var e0 = Math.min(1, Math.max(0, (rd - 0.55) / 0.43)); refl.push(0.02 + 0.2 * e0 * e0 * (3 - 2 * e0));
+      rimK.push(Math.max(0, -((-sin * s) * LIGHT[0] + (cos * s) * LIGHT[1]) + 0.3));
+      for (i = 0; i < N; i++) {
+        var e = ior(o.glass, lambdaAt(i)), eta = 1 / e;
+        var k1 = 1 - eta * eta * (1 - nz * nz), a = -eta * nz + Math.sqrt(k1);   /* 윗면: 공기 → 유리 */
+        var tx = -a * nx, ty = -a * ny, tz = -eta - a * nz;
+        d1x[f][i] = tx / -tz; d1y[f][i] = ty / -tz;
+        var k2 = 1 - e * e * (1 - tz * tz);                                      /* 바닥면: 유리 → 공기 */
+        if (k2 > 0) { live[f][i] = 1; o2x[f][i] = e * tx / Math.sqrt(k2) * gap; o2y[f][i] = e * ty / Math.sqrt(k2) * gap; }
+        M = Math.max(M, Math.hypot(d1x[f][i], d1y[f][i]) * slope * Wp + Math.hypot(o2x[f][i], o2y[f][i]));
+      }
+    }
+    var nd = ior(o.glass, 587.6), F0 = Math.pow((nd - 1) / (nd + 1), 2);
+    var R = F0 + (1 - F0) * Math.pow(1 - 1 / nlen, 5);   /* 슐릭 근사 */
+
+    /* 3. 프리즘이 덮는 영역만 한 점씩 계산 */
+    var ex = Math.abs(cos) * Lp + Math.abs(sin) * Wp + 2, ey = Math.abs(sin) * Lp + Math.abs(cos) * Wp + 2;
+    var x0 = Math.max(0, Math.floor(cx - ex)), x1 = Math.min(w, Math.ceil(cx + ex));
+    var y0 = Math.max(0, Math.floor(cy - ey)), y1 = Math.min(h, Math.ceil(cy + ey));
+    if (x1 <= x0 || y1 <= y0) return;
+    var m = Math.ceil(M) + 2;
+    var rx0 = Math.max(0, x0 - m), ry0 = Math.max(0, y0 - m), rx1 = Math.min(w, x1 + m), ry1 = Math.min(h, y1 + m);
+    var rw = rx1 - rx0, rh = ry1 - ry0, src = this.base.getContext('2d', { willReadFrequently: true }).getImageData(rx0, ry0, rw, rh).data;   /* 유리를 지나는 빛은 그림자를 입히지 않은 바탕에서 읽는다 */
+    var lin = new Float32Array(rw * rh);
+    for (i = 0; i < lin.length; i++) lin[i] = DEC[src[i * 4]];
+    var bw = x1 - x0, bh = y1 - y0, tmp = this.tmp || (this.tmp = document.createElement('canvas'));
+    tmp.width = bw; tmp.height = bh;
+    var tctx = tmp.getContext('2d'), out = tctx.createImageData(bw, bh), od = out.data;
+    var px, py, wr = WGT;
+    for (py = 0; py < bh; py++) {
+      for (px = 0; px < bw; px++) {
+        var X = x0 + px + 0.5, Y = y0 + py + 0.5, dx = X - cx, dy = Y - cy;
+        var qx = cos * dx + sin * dy, qy = -sin * dx + cos * dy;
+        var ax = Math.abs(qx) - Lp, ay = Math.abs(qy) - Wp;
+        var dist = (ax > 0 || ay > 0) ? Math.hypot(Math.max(ax, 0), Math.max(ay, 0)) : Math.max(ax, ay);
+        var cov = 0.5 - dist; cov = cov < 0 ? 0 : cov > 1 ? 1 : cov;
+        if (cov > 0) {
+          f = qy < 0 ? 0 : 1;
+          var hh = slope * Math.max(Wp - Math.abs(qy), 0), cr = 0, cg = 0, cb = 0;
+          var fx = d1x[f], fy = d1y[f], gx = o2x[f], gy = o2y[f], lv = live[f];
+          for (i = 0; i < N; i++) {
+            if (!lv[i]) continue;
+            var sx = X + fx[i] * hh + gx[i] - 0.5 - rx0, sy = Y + fy[i] * hh + gy[i] - 0.5 - ry0;
+            if (sx < 0) sx = 0; else if (sx > rw - 1.001) sx = rw - 1.001;
+            if (sy < 0) sy = 0; else if (sy > rh - 1.001) sy = rh - 1.001;
+            var ix = sx | 0, iy = sy | 0, ux = sx - ix, uy = sy - iy, p0 = iy * rw + ix;
+            var v = (lin[p0] * (1 - ux) + lin[p0 + 1] * ux) * (1 - uy) + (lin[p0 + rw] * (1 - ux) + lin[p0 + rw + 1] * ux) * uy;
+            cr += wr[i * 3] * v; cg += wr[i * 3 + 1] * v; cb += wr[i * 3 + 2] * v;
+          }
+          var tr = (1 - R) * 0.97, rf = R * refl[f];
+          cr = cr * tr + rf; cg = cg * tr + rf; cb = cb * tr + rf;
+          /* 모양을 읽기 위한 능선과 가장자리 선 */
+          var aq = Math.abs(qy), ridge = aq <= 0.4 ? 1 : aq >= 1.4 ? 0 : 1 - (aq - 0.4), rim = -dist <= 0.3 ? 1 : -dist >= 1.5 ? 0 : 1 - (-dist - 0.3) / 1.2;
+          var add = 0.022 * ridge + 0.03 * rim * rimK[f];
+          var oi = (py * bw + px) * 4;
+          od[oi] = enc(cr + add); od[oi + 1] = enc(cg + add); od[oi + 2] = enc(cb + add); od[oi + 3] = cov * 255 + 0.5;
+        }
+      }
+    }
+    tctx.putImageData(out, 0, 0); this.ctx.drawImage(tmp, x0, y0);
+  };
+  Scene.prototype.caption = function () {
+    var G = this.geo; if (!G) return;
+    var m = shiftAt(C, 550, G.W), sp = Math.abs(shiftAt(C, 400, G.W) - shiftAt(C, 700, G.W));
+    var val = {
+      glass: C.glass.label, face: C.face + '°', gap: '반폭의 ' + C.gap + '배',
+      shift: '≈ ' + m.toFixed(0) + 'px', spread: '≈ ' + sp.toFixed(1) + 'px',
+      rot: (BASE_ROT + state.rot) + '°', bg: BG[state.bg],
+      short: '면 ' + C.face + '° · 색 번짐 ≈ ' + sp.toFixed(1) + 'px',
+      plate: 'C · ' + BG[state.bg] + ' · 옮겨짐 ≈ ' + m.toFixed(0) + 'px · 색 번짐 ≈ ' + sp.toFixed(1) + 'px',
+      font: fontName
+    };
+    var f = this.el.querySelectorAll('[data-f]');
+    for (var i = 0; i < f.length; i++) { var n = f[i].getAttribute('data-f'); if (val[n] != null) f[i].textContent = val[n]; }
+  };
+
+  /* B안 제목에 실제로 잡힌 서체를 글자 폭으로 추정한다. 표시용일 뿐 모양에는 영향이 없다. */
+  var fontName = (function () {
+    var list = ['Didot', 'Bodoni 72', 'Bodoni MT', 'Sitka Display', 'Sitka Heading', 'Noto Serif Display', 'Noto Serif', 'Constantia', 'Georgia', 'Noto Serif CJK KR', 'Noto Serif KR'];
+    try {
+      var x = document.createElement('canvas').getContext('2d'), s = 'Edge of light Rag 0123';
+      var w = function (f) { x.font = '72px ' + f; return x.measureText(s).width; };
+      var m = w('monospace'), ss = w('sans-serif');
+      for (var i = 0; i < list.length; i++) {
+        if (w('"' + list[i] + '", monospace') !== m || w('"' + list[i] + '", sans-serif') !== ss) return list[i];
+      }
+    } catch (e) {}
+    return '기기 기본 세리프';
+  })();
+  document.getElementById('font-now').textContent = fontName;
+
+  var host = document.getElementById('scenes');
+  var scenes = [].map.call(host.querySelectorAll('.scene'), function (el) { return new Scene(el); });
+  var now = document.getElementById('now');
+
+  function syncControls() {
+    var r = host.querySelectorAll('.pick input');
+    for (var i = 0; i < r.length; i++) r[i].checked = (r[i].value === state.bg);
+  }
+  function setView(v, fromHash) {
+    if (!COMP[v] && v !== 'all') v = 'a';
+    state.view = v;
+    host.setAttribute('data-view', v);
+    scenes.forEach(function (s) { s.el.hidden = !(v === 'all' || v === s.comp); if (!s.el.hidden) s.layout(); });
+    var r = document.querySelector('#view input[value="' + v + '"]'); if (r) r.checked = true;
+    now.textContent = v === 'all' ? '지금: A · B 이어서' : '지금: ' + COMP[v];
+    if (!fromHash) { try { history.replaceState(null, '', '#' + v); } catch (e) {} }
+  }
+  function redraw(base) { scenes.forEach(function (s) { if (!s.geo || s.el.hidden) return; if (base) s.drawBase(); s.render(); s.caption(); }); }
+
+  document.getElementById('view').addEventListener('change', function (e) { if (e.target.name === 'view') setView(e.target.value); });
+  host.addEventListener('change', function (e) {
+    if (!e.target.matches('.pick input')) return;
+    state.bg = e.target.value; syncControls(); redraw(true);
+  });
+  /* 각도는 한 번에 바뀐다. 이 페이지에는 움직이는 그림이 없다. */
+  host.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    state.rot = b.getAttribute('data-act') === 'rot' ? state.rot + 15 : 0; redraw(false);
+  });
+  /* 접힌 칸을 펼치면 장면 높이가 바뀐다. ResizeObserver가 다시 그린다. */
+  window.addEventListener('hashchange', function () { setView(location.hash.slice(1), true); });
+  setView(location.hash.slice(1) || 'a', true);
+  window.__composition = { state: state, scenes: scenes, C: C };
+})();
+</script>
+</body>
+</html>
